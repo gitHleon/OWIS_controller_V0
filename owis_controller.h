@@ -48,6 +48,38 @@ private:
     const long Axisid_Y = 2.;
     const long Axisid_Z = 3.;
     const char* result_window = "Result window";
+
+   const long motor_type [3]={0,0,0};
+   const long limit_switch [3]={15,15,15};
+   const long limit_switch_mode [3]={15,15,15};
+   const long ref_switch [3]={2,2,2};
+   const long ref_switch_mode [3]={15,15,15};
+   const long sample_time [3]={256,256,256};
+   const long KP [3]={25,30,30};
+   const long KI [3]={25,50,50};
+   const long KD [3]={50,50,50};
+   const long DTime [3]={0,0,0};
+   const long ILimit [3]={5000000,5000000,5000000};
+   const long target_window [3]={500,500,500};
+   const long pos_mode [3]={0,0,0};
+   const long current_level [3]={1,0,0};
+   const double pitch [3]={5.0,2.0,1.0};
+   const long increments_per_rev [3]={50000,20000,2000};
+   const double gear_reduction_ratio [3]={1.0,1.0,1.0};
+   const double lin_res [3]={0.0001,0.0001,0.0001};
+   const long ini_target_mode [3]={0,0,0};
+   const long acc [3]={20000,20000,20000};
+   const long dacc [3]={20000,20000,20000};
+   const long jacc [3]={200000,200000,200000};
+   const long ref_dacc [3]={20000,20000,20000};
+   const long vel [3]={0,0,0};
+   const long pos_vel [3]={100000,298023,47683};
+   const long ref_vel_slow [3]={29802,29802,4768};
+   const long ref_vel_fast [3]={-298023,-298023,-47683};
+   const long free_vel [3]={29802,29802,47683};
+
+
+
 };
 
 #endif // OWIS_CONTROLLER_H
