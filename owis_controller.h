@@ -73,7 +73,7 @@ private:
    const long jacc [3]={200000,200000,200000};
    const long ref_dacc [3]={20000,20000,20000};
    const long vel [3]={0,0,0};
-   const long pos_vel [3]={100000,298023,47683};
+   const long pos_vel [3]={800000,500000,100000};
    const long ref_vel_slow [3]={29802,29802,4768};
    const long ref_vel_fast [3]={-298023,-298023,-47683};
    const long free_vel [3]={29802,29802,47683};
