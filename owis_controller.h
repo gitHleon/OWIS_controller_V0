@@ -20,10 +20,10 @@ public:
     ~OWIS_controller();
 
 private slots:
-    void on_quitButton_clicked();
-    void on_refreshButton_clicked();
-    void on_initButton_clicked();
-    void on_saveButton_clicked();
+//    void on_quitButton_clicked();
+//    void on_refreshButton_clicked();
+//    void on_initButton_clicked();
+//    void on_saveButton_clicked();
 
     void on_InitPS90Button_clicked();
     void on_stopButton_clicked();
@@ -35,9 +35,9 @@ private slots:
     void on_moveAxisButton_Y_clicked();
     void on_moveAxisButton_Z_clicked();
 
-    void updatePicture();
+//    void updatePicture();
     void updatePositions();
-    void on_MatchButton_clicked();
+//    void on_MatchButton_clicked();
 
 private:
     Ui::OWIS_controller *ui;
