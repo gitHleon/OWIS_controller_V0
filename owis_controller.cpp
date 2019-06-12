@@ -29,7 +29,7 @@ OWIS_controller::~OWIS_controller()
 void OWIS_controller::on_InitPS90Button_clicked()
 {
     //See example code and LabView functions
-    if (PS90_Connect(Index, 0, 1, 9600, 0, 0, 8, 0) != 0 ){
+    if (PS90_Connect(Index, 0, 3, 9600, 0, 0, 8, 0) != 0 ){
         QMessageBox::critical(this, tr("Error"), tr("Could not connect to PS90!!"));
         //        QCoreApplication::quit();
     } else {
@@ -84,7 +84,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error =  PS90_SetCurrentLevel(1,1,1);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in SetCurrentLevel X Axis")); }
 
-        error =  PS90_SetStageAttributes(1,1,1.0,50000,1);
+        error =  PS90_SetStageAttributes(1,1,5.0,50000,1);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetStageAttributes X Axis")); }
 
         error =  PS90_SetMsysResol(1,1,0.0001);
@@ -151,8 +151,8 @@ void OWIS_controller::on_InitPS90Button_clicked()
         ui->lineEdit_Target_value_Y->setText(QString::number(value));
         error = PS90_MotorInit(Index,Axisid_Y);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit Y Axis - need to add specification!!")); }
-        error = PS90_GoRef (Index,Axisid_Y,4);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis - need to add specification!!")); }
+//        error = PS90_GoRef (Index,Axisid_Y,4);
+//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis - need to add specification!!")); }
 
 
 
@@ -176,8 +176,8 @@ void OWIS_controller::on_InitPS90Button_clicked()
         ui->lineEdit_Target_value_Z->setText(QString::number(value));
         error = PS90_MotorInit(Index,Axisid_Z);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit Z Axis - need to add specification!!")); }
-        error = PS90_GoRef (Index,Axisid_Z,4);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis - need to add specification!!")); }
+//        error = PS90_GoRef (Index,Axisid_Z,4);
+//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis - need to add specification!!")); }
 
 
 
@@ -186,7 +186,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
     //setting values for doublespinbox
     ui->doubleSpinBox_newTarget_value_X->setDecimals(2);
     ui->doubleSpinBox_newTarget_value_X->setMaximum(5000);
-    ui->doubleSpinBox_newTarget_value_X->setMinimum(0.01);
+    ui->doubleSpinBox_newTarget_value_X->setMinimum(-5000);
     ui->doubleSpinBox_newTarget_value_X->setSingleStep(0.01);
     ui->doubleSpinBox_newTarget_value_X->setValue(1.0);
 
