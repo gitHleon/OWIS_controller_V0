@@ -16,7 +16,9 @@ OWIS_controller::OWIS_controller(QWidget *parent) :
     ui->setupUi(this);
 
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_X()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_Y()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_Z()));
     timer->start(100);
 }
 
@@ -40,7 +42,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
 
 
 
-        //X Axis : 1
+        //X Axis : 1//
 
         long error = PS90_SetMotorType(Index,Axisid_X,motor_type[0]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetMotorType X Axis")); }
@@ -129,39 +131,10 @@ void OWIS_controller::on_InitPS90Button_clicked()
 
         ui->lineEdit_Target_value_X->setText(QString::number(0));
 
-        error = PS90_MotorInit(Index,Axisid_X);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit X Axis - need to add specification!!")); }
 
 
-//        long mode  = PS90_GetTargetMode(Index,Axisid_X);
-//         error = PS90_GetReadError(Index);
+        //Y Axis : 2//
 
-
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode X Axis - need to add specification!!")); }
-//        if(mode  == 0)
-//            ui->label_axis_target_mode_X->setText("X Axis Target mode : Relative");
-//        else
-//            ui->label_axis_target_mode_X->setText("X Axis Target mode : Absolute");
-        //it is possible to have the ps90 calculate the distance in the selected unit via the function GetTargetEx
-//        error = PS90_SetCalcResol(Index,Axisid_X,0.0005);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetCalcResol X Axis - need to add specification!!")); }
-
-//        double value = PS90_GetTargetEx(Index,Axisid_X);
-//        error = PS90_GetReadError(Index);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx X Axis - need to add specification!!")); }
-//        ui->lineEdit_Target_value_X->setText(QString::number(value));
-//        error = PS90_MotorInit(Index,Axisid_X);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit X Axis - need to add specification!!")); }
-
-//        error = PS90_GoRef (Index,Axisid_X,4);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef X Axis - need to add specification!!")); }
-
-
-
-
-
-
-        //Y Axis : 2
 
 
 
@@ -253,32 +226,10 @@ void OWIS_controller::on_InitPS90Button_clicked()
 
         ui->lineEdit_Target_value_Y->setText(QString::number(0));
 
-        error = PS90_MotorInit(Index,Axisid_Y);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit X Axis - need to add specification!!")); }
 
 
- //       long mode  = PS90_GetTargetMode(Index,Axisid_Y);
- //       error = PS90_GetReadError(Index);
- //       if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode Y Axis - need to add specification!!")); }
- //       if(mode  == 0)
- //           ui->label_axis_target_mode_Y->setText("Y Axis Target mode : Relative");
- //       else
- //           ui->label_axis_target_mode_Y->setText("Y Axis Target mode : Absolute");
- //       //it is possible to have the ps90 calculate the distance in the selected unit via the function GetTargetEx
- //       error = PS90_SetCalcResol(Index,Axisid_Y,0.0005);
- //       if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetCalcResol Y Axis - need to add specification!!")); }
-//
-//        value = PS90_GetTargetEx(Index,Axisid_Y);
-//        error = PS90_GetReadError(Index);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Y Axis - need to add specification!!")); }
-//       ui->lineEdit_Target_value_Y->setText(QString::number(value));
-//       error = PS90_MotorInit(Index,Axisid_Y);
- //       if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit Y Axis - need to add specification!!")); }
-//        error = PS90_GoRef (Index,Axisid_Y,4);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis - need to add specification!!")); }
+        //Z Axis : 3//
 
-
-        //Z Axis : 3
 
 
 
@@ -369,33 +320,6 @@ void OWIS_controller::on_InitPS90Button_clicked()
 
         ui->lineEdit_Target_value_Z->setText(QString::number(0));
 
-        error = PS90_MotorInit(Index,Axisid_Z);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit X Axis - need to add specification!!")); }
-
-
-
-//        mode  = PS90_GetTargetMode(Index,Axisid_Z);
-//        error = PS90_GetReadError(Index);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode Z Axis - need to add specification!!")); }
-//        if(mode  == 0)
-//            ui->label_axis_target_mode_Z->setText("Z Axis Target mode : Relative");
-//        else
-//            ui->label_axis_target_mode_Z->setText("Z Axis Target mode : Absolute");
-//        //it is possible to have the ps90 calculate the distance in the selected unit via the function GetTargetEx
-//        error = PS90_SetCalcResol(Index,Axisid_Z,0.0005);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetCalcResol Z Axis - need to add specification!!")); }
-//
-//        value = PS90_GetTargetEx(Index,Axisid_Z);
-//        error = PS90_GetReadError(Index);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Z Axis - need to add specification!!")); }
-//        ui->lineEdit_Target_value_Z->setText(QString::number(value));
-//        error = PS90_MotorInit(Index,Axisid_Z);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit Z Axis - need to add specification!!")); }
-//        error = PS90_GoRef (Index,Axisid_Z,4);
-//        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis - need to add specification!!")); }
-
-
-
 
     }
     //setting values for doublespinbox
@@ -419,14 +343,54 @@ void OWIS_controller::on_InitPS90Button_clicked()
 
 }
 
+// X STAGE INIT //
 
-void OWIS_controller::updatePositions()
+void OWIS_controller::Init_X_stage()
 {
     if(!PS90_connected)
         return;
 
+X_stage_on = true;
 
-    //X Axis : 1
+    long error = PS90_MotorInit(Index,Axisid_X);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit X Axis - need to add specification!!")); }
+
+}
+
+
+void OWIS_controller::Init_Y_stage()
+{
+    if(!PS90_connected)
+        return;
+
+Y_stage_on = true;
+
+    long error = PS90_MotorInit(Index,Axisid_Y);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit Y Axis - need to add specification!!")); }
+
+}
+
+
+void OWIS_controller::Init_Z_stage()
+{
+    if(!PS90_connected)
+        return;
+
+Z_stage_on = true;
+
+    long error = PS90_MotorInit(Index,Axisid_Z);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorInit Z Axis - need to add specification!!")); }
+
+}
+
+
+// Update positions X //
+
+void OWIS_controller::updatePositions_X()
+{
+    if(!X_stage_on)
+        return;
+
     long mode  = PS90_GetTargetMode(Index,Axisid_X );
     long error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode X Axis  - need to add specification!!")); }
@@ -454,30 +418,36 @@ void OWIS_controller::updatePositions()
     else
         ui->label_axis_movement_X->setText(" X Axis still");
 
+}
 
 
 
+// Update positions Y //
 
-    //Y Axis : 3
-    mode  = PS90_GetTargetMode(Index,Axisid_Y );
-    error = PS90_GetReadError(Index);
+void OWIS_controller::updatePositions_Y()
+{
+    if(!Y_stage_on)
+        return;
+
+    long mode  = PS90_GetTargetMode(Index,Axisid_Y );
+    long error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode_Y_Axis  - need to add specification!!")); }
     if(mode  == 0)
         ui->label_axis_target_mode_Y->setText("Target mode "+ QString::number(mode) + " : Relative" );
     else
         ui->label_axis_target_mode_Y->setText("Target mode "+ QString::number(mode) + " : Absolute");
 
-    Tvalue = PS90_GetTargetEx(Index,Axisid_Y);
+    double Tvalue = PS90_GetTargetEx(Index,Axisid_Y);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Y Axis - need to add specification!!")); }
     ui->lineEdit_Target_value_Y->setText(QString::number(Tvalue));
 
-    value = PS90_GetPositionEx (Index,Axisid_Y);
+    double value = PS90_GetPositionEx (Index,Axisid_Y);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis - need to add specification!!")); }
     ui->lineEdit_axis_pos_Y->setText(QString::number(value));
 
-    move_state = PS90_GetMoveState(Index,Axisid_Y);
+    long move_state = PS90_GetMoveState(Index,Axisid_Y);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis - need to add specification!!")); }
 
@@ -486,31 +456,34 @@ void OWIS_controller::updatePositions()
     else
         ui->label_axis_movement_Y->setText(" Y Axis still");
 
+}
 
 
 
+void OWIS_controller::updatePositions_Z()
+{
+    if(!Z_stage_on)
+        return;
 
-
-    //Z Axis : 2
-    mode  = PS90_GetTargetMode(Index,Axisid_Z );
-    error = PS90_GetReadError(Index);
+    long mode  = PS90_GetTargetMode(Index,Axisid_Z );
+    long error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode Z Axis  - need to add specification!!")); }
     if(mode  == 0)
         ui->label_axis_target_mode_Z->setText("Target mode "+ QString::number(mode) + " : Relative" );
     else
         ui->label_axis_target_mode_Z->setText("Target mode "+ QString::number(mode) + " : Absolute");
 
-    Tvalue = PS90_GetTargetEx(Index,Axisid_Z);
+    double Tvalue = PS90_GetTargetEx(Index,Axisid_Z);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Z Axis - need to add specification!!")); }
     ui->lineEdit_Target_value_Z->setText(QString::number(Tvalue));
 
-    value = PS90_GetPositionEx (Index,Axisid_Z);
+    double value = PS90_GetPositionEx (Index,Axisid_Z);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis - need to add specification!!")); }
     ui->lineEdit_axis_pos_Z->setText(QString::number(value));
 
-    move_state = PS90_GetMoveState(Index,Axisid_Z);
+    long move_state = PS90_GetMoveState(Index,Axisid_Z);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis - need to add specification!!")); }
 
@@ -521,6 +494,110 @@ void OWIS_controller::updatePositions()
 
 }
 
+
+
+
+//{
+//    if(!PS90_connected)
+//        return;
+//
+//
+//    //X Axis : 1
+//
+//    long mode  = PS90_GetTargetMode(Index,Axisid_X );
+//    long error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode X Axis  - need to add specification!!")); }
+//    if(mode  == 0)
+//        ui->label_axis_target_mode_X->setText("Target mode "+ QString::number(mode) + " : Relative" );
+//    else
+//        ui->label_axis_target_mode_X->setText("Target mode "+ QString::number(mode) + " : Absolute");
+//
+//    double Tvalue = PS90_GetTargetEx(Index,Axisid_X);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx X Axis - need to add specification!!")); }
+//    ui->lineEdit_Target_value_X->setText(QString::number(Tvalue));
+//
+//    double value = PS90_GetPositionEx (Index,Axisid_X);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis - need to add specification!!")); }
+//    ui->lineEdit_axis_pos_X->setText(QString::number(value));
+//
+//    long move_state = PS90_GetMoveState(Index,Axisid_X);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis - need to add specification!!")); }
+//
+//    if(move_state != 0)
+//        ui->label_axis_movement_X->setText(" X Axis is moving!!!");
+//    else
+//        ui->label_axis_movement_X->setText(" X Axis still");
+//
+//
+//
+//
+//
+//    //Y Axis : 3
+//    mode  = PS90_GetTargetMode(Index,Axisid_Y );
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode_Y_Axis  - need to add specification!!")); }
+//    if(mode  == 0)
+//        ui->label_axis_target_mode_Y->setText("Target mode "+ QString::number(mode) + " : Relative" );
+//    else
+//        ui->label_axis_target_mode_Y->setText("Target mode "+ QString::number(mode) + " : Absolute");
+//
+//    Tvalue = PS90_GetTargetEx(Index,Axisid_Y);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Y Axis - need to add specification!!")); }
+//    ui->lineEdit_Target_value_Y->setText(QString::number(Tvalue));
+//
+//    value = PS90_GetPositionEx (Index,Axisid_Y);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis - need to add specification!!")); }
+//    ui->lineEdit_axis_pos_Y->setText(QString::number(value));
+//
+//    move_state = PS90_GetMoveState(Index,Axisid_Y);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis - need to add specification!!")); }
+//
+//    if(move_state != 0)
+//        ui->label_axis_movement_Y->setText(" Y Axis is moving!!!");
+//    else
+//        ui->label_axis_movement_Y->setText(" Y Axis still");
+//
+//
+//
+//
+//
+//
+//    //Z Axis : 2
+//    mode  = PS90_GetTargetMode(Index,Axisid_Z );
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode Z Axis  - need to add specification!!")); }
+//    if(mode  == 0)
+//        ui->label_axis_target_mode_Z->setText("Target mode "+ QString::number(mode) + " : Relative" );
+//    else
+//        ui->label_axis_target_mode_Z->setText("Target mode "+ QString::number(mode) + " : Absolute");
+//
+//    Tvalue = PS90_GetTargetEx(Index,Axisid_Z);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Z Axis - need to add specification!!")); }
+//    ui->lineEdit_Target_value_Z->setText(QString::number(Tvalue));
+//
+//    value = PS90_GetPositionEx (Index,Axisid_Z);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis - need to add specification!!")); }
+//    ui->lineEdit_axis_pos_Z->setText(QString::number(value));
+//
+//    move_state = PS90_GetMoveState(Index,Axisid_Z);
+//    error = PS90_GetReadError(Index);
+//    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis - need to add specification!!")); }
+//
+//    if(move_state != 0)
+//        ui->label_axis_movement_Z->setText(" Z Axis is moving!!!");
+//    else
+//        ui->label_axis_movement_Z->setText(" Z Axis still");
+//
+//}
+//
 
 void OWIS_controller::on_stopButton_clicked()
 {
