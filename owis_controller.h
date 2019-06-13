@@ -34,15 +34,24 @@ private slots:
     void on_moveAxisButton_X_clicked();
     void on_moveAxisButton_Y_clicked();
     void on_moveAxisButton_Z_clicked();
+    void Init_X_stage();
+    void Init_Y_stage();
+    void Init_Z_stage();
 
 //    void updatePicture();
-    void updatePositions();
+    void updatePositions_X();
+    void updatePositions_Y();
+    void updatePositions_Z();
 //    void on_MatchButton_clicked();
 
 private:
     Ui::OWIS_controller *ui;
     QLineEdit *display;
     bool PS90_connected = false;
+    bool X_stage_on = false;
+    bool Y_stage_on = false;
+    bool Z_stage_on = false;
+
     const long Index = 1.;      // PS-90 INDEX
     const long Axisid_X = 1.;
     const long Axisid_Y = 2.;
