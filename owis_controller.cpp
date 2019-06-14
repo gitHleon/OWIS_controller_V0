@@ -532,7 +532,7 @@ ui->label_stage_state_Z->setText("Z Stage: Off");
 
 void OWIS_controller::updatePositions_X()
 {
-    if(!X_stage_on)
+    if(!X_stage_init)
         return;
 
     long mode  = PS90_GetTargetMode(Index,Axisid_X );
@@ -569,7 +569,7 @@ void OWIS_controller::updatePositions_X()
 
 void OWIS_controller::updatePositions_Y()
 {
-    if(!Y_stage_on)
+    if(!Y_stage_init)
         return;
 
     long mode  = PS90_GetTargetMode(Index,Axisid_Y );
@@ -605,7 +605,7 @@ void OWIS_controller::updatePositions_Y()
 
 void OWIS_controller::updatePositions_Z()
 {
-    if(!Z_stage_on)
+    if(!Z_stage_init)
         return;
 
     long mode  = PS90_GetTargetMode(Index,Axisid_Z );
@@ -840,6 +840,10 @@ void OWIS_controller::on_DisconnectButton_clicked()
     if (error != 0 )
     { QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Disconnect"));
     }else{
+          PS90_connected = false;
+          X_stage_init=false;
+          Y_stage_init=false;
+          Z_stage_init=false;
           ui->label_PS90_general_status->setText("PS90 Status: Disconnected");
           ui->label_stage_state_X->setText("X Stage: Off");
           ui->label_stage_state_Y->setText("Y Stage: Off");
