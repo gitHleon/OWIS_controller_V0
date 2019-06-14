@@ -26,6 +26,7 @@ private slots:
 //    void on_saveButton_clicked();
 
     void on_InitPS90Button_clicked();
+    void on_DisconnectButton_clicked();
     void on_stopButton_clicked();
 
     void on_switchModeButton_X_clicked();
@@ -34,9 +35,15 @@ private slots:
     void on_moveAxisButton_X_clicked();
     void on_moveAxisButton_Y_clicked();
     void on_moveAxisButton_Z_clicked();
-    void Init_X_stage();
-    void Init_Y_stage();
-    void Init_Z_stage();
+    void on_InitStageButton_X_clicked();
+    void on_InitStageButton_Y_clicked();
+    void on_InitStageButton_Z_clicked();
+    void on_ShutOnStage_X_clicked();
+    void on_ShutOnStage_Y_clicked();
+    void on_ShutOnStage_Z_clicked();
+    void on_ShutOffStage_X_clicked();
+    void on_ShutOffStage_Y_clicked();
+    void on_ShutOffStage_Z_clicked();
 
 //    void updatePicture();
     void updatePositions_X();
@@ -48,9 +55,15 @@ private:
     Ui::OWIS_controller *ui;
     QLineEdit *display;
     bool PS90_connected = false;
+    bool X_stage_init = false;
+    bool Y_stage_init = false;
+    bool Z_stage_init = false;
     bool X_stage_on = false;
     bool Y_stage_on = false;
     bool Z_stage_on = false;
+
+
+
 
     const long Index = 1.;      // PS-90 INDEX
     const long Axisid_X = 1.;
