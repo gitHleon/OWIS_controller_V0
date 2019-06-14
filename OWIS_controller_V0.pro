@@ -26,8 +26,12 @@ CONFIG += c++11
 CONFIG += static
 
 SOURCES += \
+        initialization.cpp \
         main.cpp \
-        owis_controller.cpp
+        master_stages.cpp \
+        movement_stages.cpp \
+        owis_controller.cpp \
+        update_stages.cpp
 
 HEADERS += \
         owis_controller.h
