@@ -46,8 +46,12 @@ X_stage_on=false;
     	QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff X Axis ")); 
     } else {
 ui->label_stage_state_X->setText("X Stage: Off");
-
     }
+ui->label_minstp_x->setText("");
+ui->label_mindec_x->setText("");
+ui->label_maxdec_x->setText("");
+ui->label_maxstp_x->setText("");
+
 }
 
 
@@ -96,6 +100,11 @@ Y_stage_on=false;
 ui->label_stage_state_Y->setText("Y Stage: Off");
 
     }
+
+ui->label_minstp_y->setText("");
+ui->label_mindec_y->setText("");
+ui->label_maxdec_y->setText("");
+ui->label_maxstp_y->setText("");
 }
 
 
@@ -144,4 +153,9 @@ X_stage_on=false;
 ui->label_stage_state_Z->setText("Z Stage: Off");
 
     }
+
+ui->label_minstp_z->setText("");
+ui->label_mindec_z->setText("");
+ui->label_maxdec_z->setText("");
+ui->label_maxstp_z->setText("");
 }

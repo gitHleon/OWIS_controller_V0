@@ -113,7 +113,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis")); }
         ui->lineEdit_axis_pos_X->setText(QString::number(value));
 
-        ui->lineEdit_Target_value_X->setText(QString::number(0));
+     //   ui->lineEdit_Target_value_X->setText(QString::number(0));
 
 
 
@@ -208,7 +208,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis")); }
         ui->lineEdit_axis_pos_Y->setText(QString::number(value));
 
-        ui->lineEdit_Target_value_Y->setText(QString::number(0));
+       // ui->lineEdit_Target_value_Y->setText(QString::number(0));
 
 
 
@@ -302,7 +302,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis")); }
         ui->lineEdit_axis_pos_Z->setText(QString::number(value));
 
-        ui->lineEdit_Target_value_Z->setText(QString::number(0));
+       // ui->lineEdit_Target_value_Z->setText(QString::number(0));
 
 
     }
