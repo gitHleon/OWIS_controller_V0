@@ -85,7 +85,7 @@ private:
    const long pos_mode [3]={0,0,0};
    const long current_level [3]={1,0,0};
    const double pitch [3]={5.0,2.0,1.0};
-   const long increments_per_rev [3]={50000,20000,200};
+   const long increments_per_rev [3]={50000,20000,10000};
    const double gear_reduction_ratio [3]={1.0,1.0,1.0};
    const double lin_res [3]={0.0001,0.0001,0.0001};
    const long ini_target_mode [3]={0,0,0};
