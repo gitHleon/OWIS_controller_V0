@@ -26,8 +26,12 @@ CONFIG += c++11
 CONFIG += static
 
 SOURCES += \
+        initialization.cpp \
         main.cpp \
-        owis_controller.cpp
+        master_stages.cpp \
+        movement_stages.cpp \
+        owis_controller.cpp \
+        update_stages.cpp
 
 HEADERS += \
         owis_controller.h
@@ -38,6 +42,10 @@ FORMS += \
 
 LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\ps90.dll
 LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\x86\ps90.lib
+
+#LIBS += C:\OWIS\OWIS_controller_V0\ps90.dll
+#LIBS += C:\OWIS\OWIS_controller_V0\x86\ps90.lib
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
