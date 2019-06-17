@@ -8,7 +8,7 @@
 #include <QTimer>
 #include <iostream>
 
-
+// X STAGES //
 
 void OWIS_controller::on_stopButton_clicked()
 {
@@ -21,6 +21,8 @@ void OWIS_controller::on_stopButton_clicked()
     if (error[0] != 0 || error[1] != 0 ||error[2] != 0){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop Z Axis- need to add specification!!")); }
 }
 
+
+///////////////////////// X STAGES /////////////////////
 
 void OWIS_controller::on_switchModeButton_X_clicked()
 {
@@ -36,6 +38,18 @@ void OWIS_controller::on_switchModeButton_X_clicked()
 }
 
 
+void OWIS_controller::on_moveAxisButton_X_clicked()
+{
+    if(!X_stage_on)
+        return;
+    double Tvalue = ui->doubleSpinBox_newTarget_value_X->value();
+    long error = PS90_MoveEx(Index,Axisid_X,Tvalue,1);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
+}
+
+
+ ////////////////////////Y STAGE ///////////////////////
+
 
 void OWIS_controller::on_switchModeButton_Y_clicked()
 {
@@ -50,6 +64,17 @@ void OWIS_controller::on_switchModeButton_Y_clicked()
         error = PS90_SetTargetMode(Index,Axisid_Y,0);
 }
 
+void OWIS_controller::on_moveAxisButton_Y_clicked()
+{
+    if(!Y_stage_on)
+        return;
+    double Tvalue = ui->doubleSpinBox_newTarget_value_Y->value();
+    long error = PS90_MoveEx(Index,Axisid_Y,Tvalue,1);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Y Axis- need to add specification!!")); }
+}
+
+
+///////////////////// Z STAGE ///////////////////////////
 
 
 void OWIS_controller::on_switchModeButton_Z_clicked()
@@ -66,28 +91,6 @@ void OWIS_controller::on_switchModeButton_Z_clicked()
 }
 
 
-void OWIS_controller::on_moveAxisButton_X_clicked()
-{
-    if(!X_stage_on)
-        return;
-    double Tvalue = ui->doubleSpinBox_newTarget_value_X->value();
-    long error = PS90_MoveEx(Index,Axisid_X,Tvalue,1);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
-}
-
-
-
-void OWIS_controller::on_moveAxisButton_Y_clicked()
-{
-    if(!Y_stage_on)
-        return;
-    double Tvalue = ui->doubleSpinBox_newTarget_value_Y->value();
-    long error = PS90_MoveEx(Index,Axisid_Y,Tvalue,1);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Y Axis- need to add specification!!")); }
-}
-
-
-
 void OWIS_controller::on_moveAxisButton_Z_clicked()
 {
     if(!Z_stage_on)
@@ -96,3 +99,6 @@ void OWIS_controller::on_moveAxisButton_Z_clicked()
     long error = PS90_MoveEx(Index,Axisid_Z,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Z Axis- need to add specification!!")); }
 }
+
+
+
