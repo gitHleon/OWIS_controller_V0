@@ -34,8 +34,3 @@ OWIS_controller::~OWIS_controller()
 {
     delete ui;
 }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 7480e621ce531b3ab68085319413db0040c3f978
