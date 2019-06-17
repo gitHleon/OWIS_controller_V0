@@ -145,7 +145,7 @@ void OWIS_controller::on_ShutOffStage_Z_clicked()
 {
     if(!PS90_connected)
         return;
-X_stage_on=false;
+Z_stage_on=false;
     long error = PS90_MotorOff(Index,Axisid_Z);
     if (error != 0 ){ 
     	QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff Z Axis ")); 
