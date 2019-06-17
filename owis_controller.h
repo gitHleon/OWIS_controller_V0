@@ -99,6 +99,13 @@ private:
    const long ref_vel_fast [3]={-298023,-298023,-47683};
    const long free_vel [3]={29802,29802,47683};
 
+   const long minstp=1;
+   const long mindec=2;
+   const long min=3;
+   const long maxdec=4;
+   const long maxstp=8;
+   const long max=12;
+
 
 
 };
