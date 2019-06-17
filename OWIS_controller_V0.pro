@@ -40,11 +40,11 @@ HEADERS += \
 FORMS += \
         owis_controller.ui
 
-#LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\ps90.dll
-#LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\x86\ps90.lib
+LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\ps90.dll
+LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\x86\ps90.lib
 
-LIBS += C:\OWIS\OWIS_controller_V0\ps90.dll
-LIBS += C:\OWIS\OWIS_controller_V0\x86\ps90.lib
+#LIBS += C:\OWIS\OWIS_controller_V0\ps90.dll
+#LIBS += C:\OWIS\OWIS_controller_V0\x86\ps90.lib
 
 
 # Default rules for deployment.
