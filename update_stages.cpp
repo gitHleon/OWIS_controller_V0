@@ -36,29 +36,29 @@ void OWIS_controller::updatePositions_X()
     else
         ui->label_axis_movement_X->setText(" X Axis still");
 
-long lim_swit [4]= {PS90_GetSwitchState(Index,Axisid_X)};
+long lim_swit = {PS90_GetSwitchState(Index,Axisid_X)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
-if (lim_swit[0]==0) 
-    ui->label_minstp_x->setText("Released");
-else
+if (lim_swit==minstp || lim_swit == min) 
     ui->label_minstp_x->setText("Active");
-
-if (lim_swit[1]==0) 
-    ui->label_mindec_x->setText("Released");
 else
+    ui->label_minstp_x->setText("Released");
+
+if (lim_swit==mindec || lim_swit == min)
     ui->label_mindec_x->setText("Active");
-
-if (lim_swit[2]==0) 
-    ui->label_maxdec_x->setText("Released");
 else
+    ui->label_mindec_x->setText("Released");
+
+if (lim_swit==maxdec || lim_swit==max)
     ui->label_maxdec_x->setText("Active");
-
-if (lim_swit[3]==0) 
-    ui->label_maxstp_x->setText("Released");
 else
+    ui->label_maxdec_x->setText("Released");
+
+if (lim_swit==maxstp || lim_swit==max) 
     ui->label_maxstp_x->setText("Active");
+else
+    ui->label_maxstp_x->setText("Released");
 
 }
 
@@ -92,29 +92,29 @@ void OWIS_controller::updatePositions_Y()
     else
         ui->label_axis_movement_Y->setText(" Y Axis still");
 
-long lim_swit [4]= {PS90_GetSwitchState(Index,Axisid_Y)};
+long lim_swit= {PS90_GetSwitchState(Index,Axisid_Y)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
-if (lim_swit[0]==0)
-    ui->label_minstp_y->setText("Released");
-else
+if (lim_swit==minstp || lim_swit == min) 
     ui->label_minstp_y->setText("Active");
-
-if (lim_swit[1]==0)
-    ui->label_mindec_y->setText("Released");
 else
+    ui->label_minstp_y->setText("Released");
+
+if (lim_swit==mindec || lim_swit == min)
     ui->label_mindec_y->setText("Active");
-
-if (lim_swit[2]==0)
-    ui->label_maxdec_y->setText("Released");
 else
+    ui->label_mindec_y->setText("Released");
+
+if (lim_swit==maxdec || lim_swit==max)
     ui->label_maxdec_y->setText("Active");
-
-if (lim_swit[3]==0)
-    ui->label_maxstp_y->setText("Released");
 else
+    ui->label_maxdec_y->setText("Released");
+
+if (lim_swit==maxstp || lim_swit==max) 
     ui->label_maxstp_y->setText("Active");
+else
+    ui->label_maxstp_y->setText("Released");
 
 }
 
@@ -148,28 +148,28 @@ void OWIS_controller::updatePositions_Z()
         ui->label_axis_movement_Z->setText(" Z Axis still");
 
 
-long lim_swit [4]= {PS90_GetSwitchState(Index,Axisid_Z)};
+long lim_swit= {PS90_GetSwitchState(Index,Axisid_Z)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
-if (lim_swit[0]==0) 
-    ui->label_minstp_z->setText("Released");
-else
+if (lim_swit==minstp || lim_swit == min) 
     ui->label_minstp_z->setText("Active");
-
-if (lim_swit[1]==0) 
-    ui->label_mindec_z->setText("Released");
 else
+    ui->label_minstp_z->setText("Released");
+
+if (lim_swit==mindec || lim_swit == min)
     ui->label_mindec_z->setText("Active");
-
-if (lim_swit[2]==0) 
-    ui->label_maxdec_z->setText("Released");
 else
+    ui->label_mindec_z->setText("Released");
+
+if (lim_swit==maxdec || lim_swit==max)
     ui->label_maxdec_z->setText("Active");
-
-if (lim_swit[3]==0) 
-    ui->label_maxstp_z->setText("Released");
 else
+    ui->label_maxdec_z->setText("Released");
+
+if (lim_swit==maxstp || lim_swit==max) 
     ui->label_maxstp_z->setText("Active");
+else
+    ui->label_maxstp_z->setText("Released");
 
 }
