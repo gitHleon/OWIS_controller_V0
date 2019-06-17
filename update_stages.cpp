@@ -40,6 +40,8 @@ long lim_swit = {PS90_GetSwitchState(Index,Axisid_X)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
+    ui->lineEdit_GetSwitchInput->setText(QString::number(lim_swit));
+
 if (lim_swit==minstp || lim_swit == min) 
     ui->label_minstp_x->setText("Active");
 else
@@ -96,6 +98,8 @@ long lim_swit= {PS90_GetSwitchState(Index,Axisid_Y)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
+    ui->lineEdit_GetSwitchInput->setText(QString::number(lim_swit));
+
 if (lim_swit==minstp || lim_swit == min) 
     ui->label_minstp_y->setText("Active");
 else
@@ -150,7 +154,10 @@ void OWIS_controller::updatePositions_Z()
 
 long lim_swit= {PS90_GetSwitchState(Index,Axisid_Z)};
     error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis "));}
+
+    ui->lineEdit_GetSwitchInput->setText(QString::number(lim_swit));
+
 
 if (lim_swit==minstp || lim_swit == min) 
     ui->label_minstp_z->setText("Active");
