@@ -16,30 +16,49 @@ void OWIS_controller::updatePositions_X()
 
     long mode  = PS90_GetTargetMode(Index,Axisid_X );
     long error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode X Axis  - need to add specification!!")); }
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetMode X Axis")); }
     if(mode  == 0)
         ui->label_axis_target_mode_X->setText("Target mode "+ QString::number(mode) + " : Relative" );
     else
         ui->label_axis_target_mode_X->setText("Target mode "+ QString::number(mode) + " : Absolute");
 
-    double Tvalue = PS90_GetTargetEx(Index,Axisid_X);
-    error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx X Axis - need to add specification!!")); }
-    ui->lineEdit_Target_value_X->setText(QString::number(Tvalue));
-
     double value = PS90_GetPosition (Index,Axisid_X);
     error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis - need to add specification!!")); }
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis")); }
     ui->lineEdit_axis_pos_X->setText(QString::number(value*pitch[0]/increments_per_rev[0]));
 
     long move_state = PS90_GetMoveState(Index,Axisid_X);
     error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis - need to add specification!!")); }
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
 
     if(move_state != 0)
         ui->label_axis_movement_X->setText(" X Axis is moving!!!");
     else
         ui->label_axis_movement_X->setText(" X Axis still");
+
+long lim_swit [4]= {PS90_GetSwitchState(Index,Axisid_X)};
+    error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
+
+if (lim_swit[0]==0) 
+    ui->label_minstp_x->setText("Released");
+else
+    ui->label_minstp_x->setText("Active");
+
+if (lim_swit[1]==0) 
+    ui->label_mindec_x->setText("Released");
+else
+    ui->label_mindec_x->setText("Active");
+
+if (lim_swit[2]==0) 
+    ui->label_maxdec_x->setText("Released");
+else
+    ui->label_maxdec_x->setText("Active");
+
+if (lim_swit[3]==0) 
+    ui->label_maxstp_x->setText("Released");
+else
+    ui->label_maxstp_x->setText("Active");
 
 }
 
@@ -59,11 +78,6 @@ void OWIS_controller::updatePositions_Y()
     else
         ui->label_axis_target_mode_Y->setText("Target mode "+ QString::number(mode) + " : Absolute");
 
-    double Tvalue = PS90_GetTargetEx(Index,Axisid_Y);
-    error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Y Axis - need to add specification!!")); }
-    ui->lineEdit_Target_value_Y->setText(QString::number(Tvalue));
-
     double value = PS90_GetPosition (Index,Axisid_Y);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis - need to add specification!!")); }
@@ -77,6 +91,30 @@ void OWIS_controller::updatePositions_Y()
         ui->label_axis_movement_Y->setText(" Y Axis is moving!!!");
     else
         ui->label_axis_movement_Y->setText(" Y Axis still");
+
+long lim_swit [4]= {PS90_GetSwitchState(Index,Axisid_Y)};
+    error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
+
+if (lim_swit[0]==0)
+    ui->label_minstp_y->setText("Released");
+else
+    ui->label_minstp_y->setText("Active");
+
+if (lim_swit[1]==0)
+    ui->label_mindec_y->setText("Released");
+else
+    ui->label_mindec_y->setText("Active");
+
+if (lim_swit[2]==0)
+    ui->label_maxdec_y->setText("Released");
+else
+    ui->label_maxdec_y->setText("Active");
+
+if (lim_swit[3]==0)
+    ui->label_maxstp_y->setText("Released");
+else
+    ui->label_maxstp_y->setText("Active");
 
 }
 
@@ -95,11 +133,6 @@ void OWIS_controller::updatePositions_Z()
     else
         ui->label_axis_target_mode_Z->setText("Target mode "+ QString::number(mode) + " : Absolute");
 
-    double Tvalue = PS90_GetTargetEx(Index,Axisid_Z);
-    error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetTargetEx Z Axis - need to add specification!!")); }
-    ui->lineEdit_Target_value_Z->setText(QString::number(Tvalue));
-
     double value = PS90_GetPosition (Index,Axisid_Z);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis - need to add specification!!")); }
@@ -113,5 +146,30 @@ void OWIS_controller::updatePositions_Z()
         ui->label_axis_movement_Z->setText(" Z Axis is moving!!!");
     else
         ui->label_axis_movement_Z->setText(" Z Axis still");
+
+
+long lim_swit [4]= {PS90_GetSwitchState(Index,Axisid_Z)};
+    error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
+
+if (lim_swit[0]==0) 
+    ui->label_minstp_z->setText("Released");
+else
+    ui->label_minstp_z->setText("Active");
+
+if (lim_swit[1]==0) 
+    ui->label_mindec_z->setText("Released");
+else
+    ui->label_mindec_z->setText("Active");
+
+if (lim_swit[2]==0) 
+    ui->label_maxdec_z->setText("Released");
+else
+    ui->label_maxdec_z->setText("Active");
+
+if (lim_swit[3]==0) 
+    ui->label_maxstp_z->setText("Released");
+else
+    ui->label_maxstp_z->setText("Active");
 
 }
