@@ -71,7 +71,7 @@ private:
    const int relative=0;
    const int absolute=1;
    const long motor_type [3]={0,0,0};
-   const long limit_switch [3]={15,15,15};
+   const long limit_switch [3]={15,15,7};
    const long limit_switch_mode [3]={15,15,15};
    const long ref_switch [3]={2,2,2};
    const long ref_switch_mode [3]={15,15,15};
