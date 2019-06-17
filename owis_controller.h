@@ -1,10 +1,8 @@
 #ifndef OWIS_CONTROLLER_H
 #define OWIS_CONTROLLER_H
-
 #include <QMainWindow>
 #include <QLabel>
 #include <QLineEdit>
-
 #include <QMainWindow>
 
 namespace Ui {
@@ -44,6 +42,9 @@ private slots:
     void on_ShutOffStage_X_clicked();
     void on_ShutOffStage_Y_clicked();
     void on_ShutOffStage_Z_clicked();
+    //void on_homeButton_X_clicked();
+    //void on_homeButton_Y_clicked();
+    //void on_homeButton_Z_clicked();
 
 //    void updatePicture();
     void updatePositions_X();
@@ -61,16 +62,14 @@ private:
     bool X_stage_on = false;
     bool Y_stage_on = false;
     bool Z_stage_on = false;
-
-
-
-
     const long Index = 1.;      // PS-90 INDEX
     const long Axisid_X = 1.;
     const long Axisid_Y = 2.;
     const long Axisid_Z = 3.;
     const char* result_window = "Result window";
 
+   const int relative=0;
+   const int absolute=1;
    const long motor_type [3]={0,0,0};
    const long limit_switch [3]={15,15,15};
    const long limit_switch_mode [3]={15,15,15};
