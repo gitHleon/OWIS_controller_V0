@@ -7,6 +7,7 @@
 #include "x86\ps90.h"
 #include <QTimer>
 #include <iostream>
+#include <windows.h>
 
 
 
@@ -52,8 +53,23 @@ void OWIS_controller::on_homeButton_X_clicked()
     if(!X_stage_on)
         return;
    
-    long error = PS90_GoRef(Index,Axisid_X,goRefMode[4]);
+    long error = PS90_GoRef(Index,Axisid_X,goRefMode[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef X Axis- need to add specification!!")); }
+
+    long move_state=1;
+
+     while (move_state != 0){
+         move_state = PS90_GetMoveState(Index,Axisid_X);
+         error = PS90_GetReadError(Index);
+         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
+     }
+
+     Sleep(100);
+
+     error = PS90_ResetCounter(Index,Axisid_X);
+     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_ResetCounter X Axis- need to add specification!!")); }
+
+
 }
 
 
@@ -88,8 +104,23 @@ void OWIS_controller::on_homeButton_Y_clicked()
     if(!Y_stage_on)
         return;
    
-    long error = PS90_GoRef(Index,Axisid_Y,goRefMode[4]);
+    long error = PS90_GoRef(Index,Axisid_Y,goRefMode[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis- need to add specification!!")); }
+
+   long move_state=1;
+
+    while (move_state != 0){
+        move_state = PS90_GetMoveState(Index,Axisid_Y);
+        error = PS90_GetReadError(Index);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis ")); }
+    }
+
+    Sleep(100);
+
+    error = PS90_ResetCounter(Index,Axisid_Y);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_ResetCounter Y Axis- need to add specification!!")); }
+
+
 }
 
 
@@ -124,8 +155,23 @@ void OWIS_controller::on_homeButton_Z_clicked()
     if(!Z_stage_on)
         return;
    
-    long error = PS90_GoRef(Index,Axisid_Y,goRefMode[4]);
+    long error = PS90_GoRef(Index,Axisid_Z,goRefMode[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis- need to add specification!!")); }
+
+    long move_state=1;
+
+     while (move_state != 0){
+         move_state = PS90_GetMoveState(Index,Axisid_Z);
+         error = PS90_GetReadError(Index);
+         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis ")); }
+     }
+
+     Sleep(100);
+     error = PS90_ResetCounter(Index,Axisid_Z);
+     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_ResetCounter Z Axis- need to add specification!!")); }
+
+
+
 }
 
 
