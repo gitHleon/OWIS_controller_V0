@@ -106,8 +106,8 @@ private:
    const long ref_dacc [3]={80,80,80};
    const long vel [3]={0,0,0};
    const long pos_vel [3]={10,10,3};
-   const long ref_vel_slow [3]={-5,-5,-3};
-   const long ref_vel_fast [3]={-10,-10,-5};
+   const long ref_vel_slow [3]={1,1,1};
+   const long ref_vel_fast [3]={-10,-7,-3};
    const long free_vel [3]={29802,29802,47683};
 
    const long minstp=1;
