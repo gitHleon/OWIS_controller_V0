@@ -8,7 +8,7 @@
 #include <QTimer>
 #include <iostream>
 
-// X STAGES //
+
 
 void OWIS_controller::on_stopButton_clicked()
 {
@@ -22,7 +22,7 @@ void OWIS_controller::on_stopButton_clicked()
 }
 
 
-///////////////////////// X STAGES /////////////////////
+///////////////////////// X STAGE /////////////////////
 
 void OWIS_controller::on_switchModeButton_X_clicked()
 {
@@ -47,8 +47,18 @@ void OWIS_controller::on_moveAxisButton_X_clicked()
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
 }
 
+void OWIS_controller::on_homeButton_X_clicked()
+{
+    if(!X_stage_on)
+        return;
+   
+    long error = PS90_GoRef(Index,Axisid_X,goRefMode[4]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef X Axis- need to add specification!!")); }
+}
 
- ////////////////////////Y STAGE ///////////////////////
+
+
+ //////////////////////// Y STAGE ///////////////////////
 
 
 void OWIS_controller::on_switchModeButton_Y_clicked()
@@ -71,6 +81,15 @@ void OWIS_controller::on_moveAxisButton_Y_clicked()
     double Tvalue = ui->doubleSpinBox_newTarget_value_Y->value();
     long error = PS90_MoveEx(Index,Axisid_Y,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Y Axis- need to add specification!!")); }
+}
+
+void OWIS_controller::on_homeButton_Y_clicked()
+{
+    if(!Y_stage_on)
+        return;
+   
+    long error = PS90_GoRef(Index,Axisid_Y,goRefMode[4]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis- need to add specification!!")); }
 }
 
 
@@ -98,6 +117,15 @@ void OWIS_controller::on_moveAxisButton_Z_clicked()
     double Tvalue = ui->doubleSpinBox_newTarget_value_Z->value();
     long error = PS90_MoveEx(Index,Axisid_Z,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Z Axis- need to add specification!!")); }
+}
+
+void OWIS_controller::on_homeButton_Z_clicked()
+{
+    if(!Z_stage_on)
+        return;
+   
+    long error = PS90_GoRef(Index,Axisid_Y,goRefMode[4]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis- need to add specification!!")); }
 }
 
 
