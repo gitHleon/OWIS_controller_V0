@@ -65,6 +65,9 @@ private slots:
     void runY (double direction);
     void stopY ();
     void virtualJoy_Y();
+    void runZ (double direction);
+    void stopZ ();
+    void virtualJoy_Z();
 
 private:
 
