@@ -29,11 +29,17 @@ ui->label_stage_state_X->setText("X Stage: Off");
 ui->label_stage_state_Y->setText("Y Stage: Off");
 ui->label_stage_state_Z->setText("Z Stage: Off");
 
- connect(ui->joyNegButton_X, SIGNAL(pressed()), this, SLOT(virtualJoy()));
- connect(ui->joyPosButton_X, SIGNAL(pressed()), this, SLOT(virtualJoy()));
+ connect(ui->joyNegButton_X, SIGNAL(pressed()), this, SLOT(virtualJoy_X()));
+ connect(ui->joyPosButton_X, SIGNAL(pressed()), this, SLOT(virtualJoy_X()));
 
  connect(ui->joyNegButton_X, &QPushButton::released, this, &OWIS_controller::stopX);
  connect(ui->joyPosButton_X, &QPushButton::released, this, &OWIS_controller::stopX);
+
+ connect(ui->joyNegButton_Y, SIGNAL(pressed()), this, SLOT(virtualJoy_Y()));
+ connect(ui->joyPosButton_Y, SIGNAL(pressed()), this, SLOT(virtualJoy_Y()));
+
+ connect(ui->joyNegButton_Y, &QPushButton::released, this, &OWIS_controller::stopY);
+ connect(ui->joyPosButton_Y, &QPushButton::released, this, &OWIS_controller::stopY);
 
 }
 
