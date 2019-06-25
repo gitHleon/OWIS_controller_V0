@@ -551,7 +551,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Home X</string>
+     <string>Home Y</string>
     </property>
    </widget>
    <widget class="QPushButton" name="homeButton_Z">
@@ -564,7 +564,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Home X</string>
+     <string>Home Z</string>
     </property>
    </widget>
   </widget>
