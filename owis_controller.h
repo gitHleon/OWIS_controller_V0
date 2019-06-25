@@ -1,9 +1,11 @@
 #ifndef OWIS_CONTROLLER_H
 #define OWIS_CONTROLLER_H
+
 #include <QMainWindow>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMainWindow>
+#include <QPushButton>
 
 namespace Ui {
 class OWIS_controller;
@@ -57,7 +59,9 @@ private slots:
     void on_homeButton_X_clicked();
     void on_homeButton_Y_clicked();
     void on_homeButton_Z_clicked();
-
+    void runX (double direction);
+    void stopX ();
+    void virtualJoy();
 
 private:
 
@@ -108,7 +112,12 @@ private:
    const long pos_vel [3]={10,10,3};
    const long ref_vel_slow [3]={1,1,1};
    const long ref_vel_fast [3]={-10,-7,-3};
+   const long joy_vel_slow_pos[3]={1,1,1};
+   const long joy_vel_fast_neg[3]={-10,-7,-3};
+   const long joy_vel_slow_neg[3]={-1,-1,-1};
+   const long joy_vel_fast_pos[3]={10,7,3};
    const long free_vel [3]={29802,29802,47683};
+
 
    const long minstp=1;
    const long mindec=2;
