@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 
+
 namespace Ui {
 class OWIS_controller;
 }
@@ -21,6 +22,8 @@ public:
 
 private slots:
 
+
+void J_axes_translator(int index, int button, double value);
 
 /// initialization.cpp ///
 
