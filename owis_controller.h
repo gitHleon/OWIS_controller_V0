@@ -61,7 +61,10 @@ private slots:
     void on_homeButton_Z_clicked();
     void runX (double direction);
     void stopX ();
-    void virtualJoy();
+    void virtualJoy_X();
+    void runY (double direction);
+    void stopY ();
+    void virtualJoy_Y();
 
 private:
 
