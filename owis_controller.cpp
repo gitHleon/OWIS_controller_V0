@@ -7,6 +7,7 @@
 #include "x86\ps90.h"
 #include <QTimer>
 #include <iostream>
+#include <QPushButton>
 
 OWIS_controller::OWIS_controller(QWidget *parent) :
     QMainWindow(parent),
@@ -27,6 +28,12 @@ ui->label_PS90_general_status->setText("PS90 Status: Disconnected");
 ui->label_stage_state_X->setText("X Stage: Off");
 ui->label_stage_state_Y->setText("Y Stage: Off");
 ui->label_stage_state_Z->setText("Z Stage: Off");
+
+ connect(ui->joyNegButton_X, SIGNAL(pressed()), this, SLOT(virtualJoy()));
+ connect(ui->joyPosButton_X, SIGNAL(pressed()), this, SLOT(virtualJoy()));
+
+ connect(ui->joyNegButton_X, &QPushButton::released, this, &OWIS_controller::stopX);
+ connect(ui->joyPosButton_X, &QPushButton::released, this, &OWIS_controller::stopX);
 
 }
 
