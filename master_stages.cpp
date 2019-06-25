@@ -9,9 +9,6 @@
 #include <iostream>
 
 
-
-
-
 void OWIS_controller::on_InitStageButton_X_clicked()
 {
     if(!PS90_connected)
