@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 CONFIG += static
 
+include(QJoysticks-master\QJoysticks.pri)
+
 SOURCES += \
         initialization.cpp \
         main.cpp \
@@ -51,3 +53,5 @@ LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\O
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
