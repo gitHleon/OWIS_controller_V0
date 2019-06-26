@@ -69,27 +69,30 @@ OWIS_controller::~OWIS_controller()
 
 void OWIS_controller::J_axes_translator(int index, int axis, double value)
 {
+    if (!Y_stage_on)
+        return;
+
     const double threshold = 0.15;
     if(index != 0 )
         return; //I want only the main joystick to work
-    if(axis == 0 && (value > threshold))
-        runX(+1);
-    else if(axis == 0 && (value < -threshold))
-        runX(-1);
-    else if(axis == 0 && ((value < threshold) || (value > -threshold)))
-        stopX();
+//    if(axis == 0 && (value > threshold))
+//        runX(+1);
+//    else if(axis == 0 && (value < -threshold))
+//        runX(-1);
+//    else if(axis == 0 && ((value < threshold) || (value > -threshold)))
+//        stopX();
     else if(axis == 1 && (value > threshold))
         runY(+1);
     else if(axis == 1 && (value < -threshold))
         runY(-1);
     else if(axis == 1 && ((value < threshold) || (value > -threshold)))
         stopY();
-    else if(axis == 2 && (value > threshold))
-        runZ(+1);
-    else if(axis == 2 && (value < -threshold))
-        runZ(-1);
-    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
-        stopZ();
+//    else if(axis == 2 && (value > threshold))
+//        runZ(+1);
+//    else if(axis == 2 && (value < -threshold))
+//        runZ(-1);
+//    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
+//        stopZ();
 
 
 }
