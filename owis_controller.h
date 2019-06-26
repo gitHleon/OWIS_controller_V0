@@ -144,6 +144,9 @@ private:
 
    const long goRefMode [8]={0,1,2,3,4,5,6,7};
 
+   int test_counter=1;
+   int state_Y=0;
+
 };
 
 #endif // OWIS_CONTROLLER_H
