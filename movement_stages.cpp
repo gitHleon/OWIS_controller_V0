@@ -83,6 +83,10 @@ void OWIS_controller::on_homeButton_X_clicked()
 
 void OWIS_controller::runX (double direction)
 {
+if(!X_stage_on)
+        return;
+
+
 if (direction > 0)
     {long error =   PS90_SetSlowRefFEx(Index,Axisid_X,joy_vel_slow_neg[0]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx X Axis")); }
@@ -107,6 +111,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::stopX()
 
 {
+
+if(!X_stage_on)
+        return;
+
 long error = PS90_Stop (Index,Axisid_X);
 if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop X Axis"));
 }
@@ -115,6 +123,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Sto
 void OWIS_controller::virtualJoy_X()
 
 {
+
+if(!X_stage_on)
+        return;
+
 if (sender() == ui->joyNegButton_X)
 runX(-1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunX Axis")); }}
@@ -186,6 +198,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 
 void OWIS_controller::runY (double direction)
 {
+
+if(!Y_stage_on)
+        return;
+
 if (direction > 0)
     {long error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_neg[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
@@ -210,6 +226,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::stopY()
 
 {
+
+if(!Y_stage_on)
+        return;
+
 long error = PS90_Stop (Index,Axisid_Y);
 if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop Y Axis"));
 }
@@ -218,6 +238,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Sto
 void OWIS_controller::virtualJoy_Y()
 
 {
+
+if(!Y_stage_on)
+        return;
+
 if (sender() == ui->joyNegButton_Y)
 runY(-1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunY Axis")); }}
@@ -285,6 +309,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 
 void OWIS_controller::runZ (double direction)
 {
+
+if(!Z_stage_on)
+        return;
+
 if (direction > 0)
     {long error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_neg[2]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
@@ -309,6 +337,9 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::stopZ()
 
 {
+if(!Z_stage_on)
+        return;
+
 long error = PS90_Stop (Index,Axisid_Z);
 if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop Z Axis"));
 }
@@ -317,6 +348,10 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Sto
 void OWIS_controller::virtualJoy_Z()
 
 {
+
+if(!Z_stage_on)
+        return;
+    
 if (sender() == ui->joyNegButton_Z)
 runY(-1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
