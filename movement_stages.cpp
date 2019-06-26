@@ -43,6 +43,8 @@ void OWIS_controller::on_moveAxisButton_X_clicked()
 {
     if(!X_stage_on)
         return;
+
+
     double Tvalue = ui->doubleSpinBox_newTarget_value_X->value();
     long error = PS90_MoveEx(Index,Axisid_X,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
@@ -199,7 +201,7 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::runY (double direction)
 {
 
-if(!Y_stage_on)
+if(!Y_stage_on && move_state_Y != 0)
         return;
 
 if (direction > 0)
@@ -227,7 +229,7 @@ void OWIS_controller::stopY()
 
 {
 
-if(!Y_stage_on)
+if(!Y_stage_on && move_state_Y == 0)
         return;
 
 long error = PS90_Stop (Index,Axisid_Y);
@@ -310,7 +312,7 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::runZ (double direction)
 {
 
-if(!Z_stage_on)
+if(!Z_stage_on && move_state_Z != 0)
         return;
 
 if (direction > 0)
@@ -337,7 +339,7 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::stopZ()
 
 {
-if(!Z_stage_on)
+if(!Z_stage_on && move_state_Z ==0)
         return;
 
 long error = PS90_Stop (Index,Axisid_Z);
@@ -353,10 +355,10 @@ if(!Z_stage_on)
         return;
     
 if (sender() == ui->joyNegButton_Z)
-runY(-1);
+runZ(-1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
  else if (sender() == ui->joyPosButton_Z)
-runY(1);
+runZ(1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
 }
 
