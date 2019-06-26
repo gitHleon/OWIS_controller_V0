@@ -666,6 +666,84 @@
        <string>- Z</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_pos_Y">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>180</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y +</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_neg_Y">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>260</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y -</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_neg_X">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>220</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X -</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_pos_X">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>220</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X +</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_pos_Z">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>180</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Z +</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_neg_Z">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>260</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Z-</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
