@@ -27,11 +27,11 @@ void OWIS_controller::updatePositions_X()
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis")); }
     ui->lineEdit_axis_pos_X->setText(QString::number(value*pitch[0]/increments_per_rev[0]));
 
-    long move_state = PS90_GetMoveState(Index,Axisid_X);
+    move_state_X = PS90_GetMoveState(Index,Axisid_X);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
 
-    if(move_state != 0)
+    if(move_state_X != 0)
         ui->label_axis_movement_X->setText(" X Axis is moving!!!");
     else
         ui->label_axis_movement_X->setText(" X Axis still");
@@ -85,11 +85,11 @@ void OWIS_controller::updatePositions_Y()
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis - need to add specification!!")); }
     ui->lineEdit_axis_pos_Y->setText(QString::number(value*pitch[1]/increments_per_rev[1]));
 
-    long move_state = PS90_GetMoveState(Index,Axisid_Y);
+    move_state_Y = PS90_GetMoveState(Index,Axisid_Y);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis - need to add specification!!")); }
 
-    if(move_state != 0)
+    if(move_state_Y != 0)
         ui->label_axis_movement_Y->setText(" Y Axis is moving!!!");
     else
         ui->label_axis_movement_Y->setText(" Y Axis still");
@@ -142,11 +142,11 @@ void OWIS_controller::updatePositions_Z()
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis - need to add specification!!")); }
     ui->lineEdit_axis_pos_Z->setText(QString::number(value*pitch[2]/increments_per_rev[2]));
 
-    long move_state = PS90_GetMoveState(Index,Axisid_Z);
+    move_state_Z = PS90_GetMoveState(Index,Axisid_Z);
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis - need to add specification!!")); }
 
-    if(move_state != 0)
+    if(move_state_Z != 0)
         ui->label_axis_movement_Z->setText(" Z Axis is moving!!!");
     else
         ui->label_axis_movement_Z->setText(" Z Axis still");
