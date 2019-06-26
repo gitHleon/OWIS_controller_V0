@@ -69,30 +69,83 @@ OWIS_controller::~OWIS_controller()
 
 void OWIS_controller::J_axes_translator(int index, int axis, double value)
 {
-    if (!Y_stage_on)
-        return;
-
-    const double threshold = 0.15;
+   
+  const double threshold = 0.15;
     if(index != 0 )
         return; //I want only the main joystick to work
-//    if(axis == 0 && (value > threshold))
-//        runX(+1);
-//    else if(axis == 0 && (value < -threshold))
-//        runX(-1);
-//    else if(axis == 0 && ((value < threshold) || (value > -threshold)))
-//        stopX();
-    else if(axis == 1 && (value > threshold))
-        runY(+1);
-    else if(axis == 1 && (value < -threshold))
+
+
+if (X_stage_on !=0)
+{
+    long move_state_X = PS90_GetMoveState(Index,Axisid_X);
+    long error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
+
+ if(axis == 0 && (value > threshold) && move_state_X == 0)
+    {
+        runX(+1);
+        ui->label_pos_X->setText("on");
+    }
+    else if(axis == 0 && (value < -threshold) && move_state_X == 0)
+    {
+        runX(-1);
+        ui->label_neg_X->setText("on");
+    }
+    else if(axis == 0 && ((value < threshold) || (value > -threshold)) && move_state_X != 0)
+    { 
+        stopX();
+        ui->label_neg_X->setText("off");
+        ui->label_pos_X->setText("off");
+    }
+
+}
+
+if (Y_stage_on !=0)
+{
+    long move_state_Y = PS90_GetMoveState(Index,Axisid_Y);
+    long error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis ")); }
+
+if(axis == 1 && (value > threshold) && move_state_Y == 0)
+    {
         runY(-1);
-    else if(axis == 1 && ((value < threshold) || (value > -threshold)))
+        ui->label_pos_Y->setText("on");
+    }
+    else if(axis == 1 && (value < -threshold) && move_state_Y == 0)
+    {
+        runY(+1);
+        ui->label_neg_Y->setText("on");
+    }
+    else if(axis == 1 && ((value < threshold) || (value > -threshold)) && move_state_Y != 0)
+    { 
         stopY();
-//    else if(axis == 2 && (value > threshold))
-//        runZ(+1);
-//    else if(axis == 2 && (value < -threshold))
-//        runZ(-1);
-//    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
-//        stopZ();
+        ui->label_neg_Y->setText("off");
+        ui->label_pos_Y->setText("off");
+    }
 
+}
 
+if (Z_stage_on !=0)
+{
+    long move_state_Z = PS90_GetMoveState(Index,Axisid_Z);
+    long error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis ")); }
+
+else if(axis == 2 && (value > threshold) && move_state_Z == 0)
+        {
+        runZ(+1);
+        ui->label_pos_Z->setText("on");
+    }
+    else if(axis == 2 && (value < -threshold) && move_state_Z == 0)
+        {
+        runZ(-1);
+        ui->label_neg_Z->setText("on");
+    }
+    else if(axis == 2 && ((value < threshold) || (value > -threshold)) && move_state_Z != 0)
+     {   stopZ();
+        ui->label_neg_Z->setText("off");
+        ui->label_pos_Z->setText("off");
+    }
+
+}
 }
