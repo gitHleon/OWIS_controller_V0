@@ -570,19 +570,6 @@
        <string>Z Axis position</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_axis_movement_Z">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>290</y>
-        <width>161</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Z Axis movement state</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -794,6 +781,19 @@
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_axis_movement_Z">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>220</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Z Axis movement state</string>
       </property>
      </widget>
     </widget>
