@@ -210,6 +210,9 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::stopY()
 
 {
+if (!Y_stage_on)
+return;
+
 long error = PS90_Stop (Index,Axisid_Y);
 if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop Y Axis"));
 }
