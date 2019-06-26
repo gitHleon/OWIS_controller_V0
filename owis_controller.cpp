@@ -70,7 +70,7 @@ OWIS_controller::~OWIS_controller()
 void OWIS_controller::J_axes_translator(int index, int axis, double value)
 {
    
-  const double threshold = 0.15;
+  const double threshold = 0.05;
     if(index != 0 )
         return; //I want only the main joystick to work
 
@@ -80,21 +80,18 @@ void OWIS_controller::J_axes_translator(int index, int axis, double value)
 
 if (X_stage_on ==true)
 {
-    long move_state_X = PS90_GetMoveState(Index,Axisid_X);
-    long error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
-
- if(axis == 0 && (value > threshold) && move_state_X == 0)
+ 
+ if(axis == 0 && (value > threshold) )
     {
         runX(+1);
         ui->label_pos_X->setText("on");
     }
-    else if(axis == 0 && (value < -threshold) && move_state_X == 0)
+    else if(axis == 0 && (value < -threshold) )
     {
         runX(-1);
         ui->label_neg_X->setText("on");
     }
-    else if(axis == 0 && ((value < threshold) || (value > -threshold)) && move_state_X != 0)
+    else if(axis == 0 && ((value < threshold) || (value > -threshold)) )
     { 
         stopX();
         ui->label_neg_X->setText("off");
@@ -109,7 +106,6 @@ if (Y_stage_on == true)
     ui->label_neg_Y->setText("off");
     ui->label_pos_Y->setText("off");
 
-
 if(axis == 1 && (value > threshold))
     {
         runY(-1);
@@ -120,13 +116,12 @@ if(axis == 1 && (value > threshold))
         runY(+1);
         ui->label_neg_Y->setText("on");
     }
-    else if(axis == 1 && ((value < threshold) || (value > -threshold)))
+    else if(((value < threshold) || (value > -threshold)))
     { 
         stopY();
         ui->label_neg_Y->setText("off");
         ui->label_pos_Y->setText("off");
     }
-
 }
 
 if (Z_stage_on == true)
@@ -148,6 +143,69 @@ if (Z_stage_on == true)
         ui->label_neg_Z->setText("off");
         ui->label_pos_Z->setText("off");
     }
+}
+
+
+
+if(axis == 0 && (value > threshold) )
+    {
+    
+        ui->label_pos_X->setText("on");
+    }
+    else if(axis == 0 && (value < -threshold) )
+    {
+    
+        ui->label_neg_X->setText("on");
+    }
+    else if(axis == 0 && ((value < threshold) || (value > -threshold)) )
+    { 
+    
+        ui->label_neg_X->setText("off");
+        ui->label_pos_X->setText("off");
+    }
+
+
+if(axis == 1 && (value > threshold))
+    {
+    
+        ui->label_pos_Y->setText("on");
+    }
+    else if(axis == 1 && (value < -threshold))
+    {
+
+        ui->label_neg_Y->setText("on");
+    }
+    else if(((value < threshold) || (value > -threshold)))
+    { 
+    
+        ui->label_neg_Y->setText("off");
+        ui->label_pos_Y->setText("off");
+    }
+
+
+
+   if(axis == 2 && (value > threshold) && move_state_Z == 0)
+        {
+
+        ui->label_pos_Z->setText("on");
+    }
+    else if(axis == 2 && (value < -threshold) && move_state_Z == 0)
+        {
+        ui->label_neg_Z->setText("on");
+    }
+    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
+     {
+        ui->label_neg_Z->setText("off");
+        ui->label_pos_Z->setText("off");
+    }
+
+
+
+
+
+
+
 
 }
-}
+
+
