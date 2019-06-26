@@ -351,18 +351,28 @@ void OWIS_controller::on_DisconnectButton_clicked()
 {
     if(!PS90_connected)
         return;
+long error;
 
+if (X_stage_on != 0)
+{
 X_stage_on=false;
-    long error = PS90_MotorOff(Index,Axisid_X);
+    error = PS90_MotorOff(Index,Axisid_X);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff X Axis "));}
-  
-Y_stage_on=false;
+}
+
+if (Y_stage_on != 0)
+{
+    Y_stage_on=false;
      error = PS90_MotorOff(Index,Axisid_Y);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff Y Axis "));}
-  
-Z_stage_on=false;
+ }
+
+if (Z_stage_on != 0)
+{
+    Z_stage_on=false;
      error = PS90_MotorOff(Index,Axisid_Z);
     if (error != 0 ){QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff Z Axis "));}
+}
 
      error = PS90_Disconnect(1);
     if (error != 0 )
