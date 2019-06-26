@@ -85,6 +85,9 @@ private:
     bool X_stage_on = false;
     bool Y_stage_on = false;
     bool Z_stage_on = false;
+    long move_state_X=0;
+    long move_state_Y=0;
+    long move_state_Z=0;
     const long Index = 1.;      // PS-90 INDEX
     const long Axisid_X = 1.;
     const long Axisid_Y = 2.;
