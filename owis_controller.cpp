@@ -74,8 +74,11 @@ void OWIS_controller::J_axes_translator(int index, int axis, double value)
     if(index != 0 )
         return; //I want only the main joystick to work
 
+    ui->joyAxis->setText(QString::number(axis));
+    ui->joyValue->setText(QString::number(value));
 
-if (X_stage_on !=0)
+
+if (X_stage_on ==true)
 {
     long move_state_X = PS90_GetMoveState(Index,Axisid_X);
     long error = PS90_GetReadError(Index);
@@ -100,23 +103,24 @@ if (X_stage_on !=0)
 
 }
 
-if (Y_stage_on !=0)
+if (Y_stage_on == true)
 {
-    long move_state_Y = PS90_GetMoveState(Index,Axisid_Y);
-    long error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis ")); }
 
-if(axis == 1 && (value > threshold) && move_state_Y == 0)
+    ui->label_neg_Y->setText("off");
+    ui->label_pos_Y->setText("off");
+
+
+if(axis == 1 && (value > threshold))
     {
         runY(-1);
         ui->label_pos_Y->setText("on");
     }
-    else if(axis == 1 && (value < -threshold) && move_state_Y == 0)
+    else if(axis == 1 && (value < -threshold))
     {
         runY(+1);
         ui->label_neg_Y->setText("on");
     }
-    else if(axis == 1 && ((value < threshold) || (value > -threshold)) && move_state_Y != 0)
+    else if(axis == 1 && ((value < threshold) || (value > -threshold)))
     { 
         stopY();
         ui->label_neg_Y->setText("off");
@@ -125,24 +129,22 @@ if(axis == 1 && (value > threshold) && move_state_Y == 0)
 
 }
 
-if (Z_stage_on !=0)
+if (Z_stage_on == true)
 {
-    long move_state_Z = PS90_GetMoveState(Index,Axisid_Z);
-    long error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis ")); }
 
-else if(axis == 2 && (value > threshold) && move_state_Z == 0)
+   if(axis == 2 && (value > threshold) && move_state_Z == 0)
         {
-        runZ(+1);
+//        runZ(+1);
         ui->label_pos_Z->setText("on");
     }
     else if(axis == 2 && (value < -threshold) && move_state_Z == 0)
         {
-        runZ(-1);
+//        runZ(-1);
         ui->label_neg_Z->setText("on");
     }
-    else if(axis == 2 && ((value < threshold) || (value > -threshold)) && move_state_Z != 0)
-     {   stopZ();
+    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
+     {
+//        stopZ();
         ui->label_neg_Z->setText("off");
         ui->label_pos_Z->setText("off");
     }
