@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QPushButton>
 #include <QJoysticks.h>
+#include <windows.h>
 
 OWIS_controller::OWIS_controller(QWidget *parent) :
     QMainWindow(parent),
@@ -23,7 +24,7 @@ OWIS_controller::OWIS_controller(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_X()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_Y()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_Z()));
-    timer->start(100);
+    timer->start(20);
 
 ui->label_PS90_general_status->setText("PS90 Status: Disconnected");
 
@@ -102,44 +103,53 @@ if (X_stage_on ==true)
 
 if (Y_stage_on == true)
 {
-
+long state_Y=0;
     ui->label_neg_Y->setText("off");
     ui->label_pos_Y->setText("off");
 
-if(axis == 1 && (value > threshold))
+if(axis == 1 && (value > threshold)  && state_Y == 0)
     {
-        runY(-1);
+//        runY(-1);
         ui->label_pos_Y->setText("on");
+//        state_Y=1; //(neg mov)
+
     }
-    else if(axis == 1 && (value < -threshold))
+    else if(axis == 1 && (value < -threshold) && state_Y == 0)
     {
-        runY(+1);
+//        runY(+1);
         ui->label_neg_Y->setText("on");
+//        state_Y=2; //(Pos mov)
+
     }
-    else if(((value < threshold) || (value > -threshold)))
+    else if((axis == 1 ) && (value < threshold) && (value > -threshold) && ((state_Y == 1) || (state_Y == 2)))
     { 
-        stopY();
+//        stopY();
         ui->label_neg_Y->setText("off");
         ui->label_pos_Y->setText("off");
+//        state_Y=0;
+
     }
 }
 
 if (Z_stage_on == true)
 {
-
    if(axis == 2 && (value > threshold) && move_state_Z == 0)
         {
-//        runZ(+1);
+
+       runZ(+1);
+//       Sleep(100);
         ui->label_pos_Z->setText("on");
     }
     else if(axis == 2 && (value < -threshold) && move_state_Z == 0)
         {
-//        runZ(-1);
+        runZ(-1);
+//        Sleep(100);
         ui->label_neg_Z->setText("on");
     }
     else if(axis == 2 && ((value < threshold) || (value > -threshold)))
      {
-//        stopZ();
+        stopZ();
+//        Sleep(100);
         ui->label_neg_Z->setText("off");
         ui->label_pos_Z->setText("off");
     }
@@ -147,64 +157,57 @@ if (Z_stage_on == true)
 
 
 
-if(axis == 0 && (value > threshold) )
-    {
+//if(axis == 0 && (value > threshold) )
+//    {
     
-        ui->label_pos_X->setText("on");
-    }
-    else if(axis == 0 && (value < -threshold) )
-    {
+//        ui->label_pos_X->setText("on");
+//    }
+//    else if(axis == 0 && (value < -threshold) )
+//    {
     
-        ui->label_neg_X->setText("on");
-    }
-    else if(axis == 0 && ((value < threshold) || (value > -threshold)) )
-    { 
+//        ui->label_neg_X->setText("on");
+//    }
+//    else if(axis == 0 && ((value < threshold) || (value > -threshold)) )
+//    {
     
-        ui->label_neg_X->setText("off");
-        ui->label_pos_X->setText("off");
-    }
+//        ui->label_neg_X->setText("off");
+//        ui->label_pos_X->setText("off");
+//    }
 
 
-if(axis == 1 && (value > threshold))
-    {
+//if(axis == 1 && (value > threshold))
+//    {
     
-        ui->label_pos_Y->setText("on");
-    }
-    else if(axis == 1 && (value < -threshold))
-    {
+//        ui->label_pos_Y->setText("on");
+//    }
+//    else if(axis == 1 && (value < -threshold))
+//    {
 
-        ui->label_neg_Y->setText("on");
-    }
-    else if(((value < threshold) || (value > -threshold)))
-    { 
+//        ui->label_neg_Y->setText("on");
+//    }
+//    else if(((value < threshold) || (value > -threshold)))
+//    {
     
-        ui->label_neg_Y->setText("off");
-        ui->label_pos_Y->setText("off");
-    }
+//        ui->label_neg_Y->setText("off");
+//        ui->label_pos_Y->setText("off");
+//    }
 
 
 
-   if(axis == 2 && (value > threshold) && move_state_Z == 0)
-        {
+//   if(axis == 2 && (value > threshold) && move_state_Z == 0)
+//        {
 
-        ui->label_pos_Z->setText("on");
-    }
-    else if(axis == 2 && (value < -threshold) && move_state_Z == 0)
-        {
-        ui->label_neg_Z->setText("on");
-    }
-    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
-     {
-        ui->label_neg_Z->setText("off");
-        ui->label_pos_Z->setText("off");
-    }
-
-
-
-
-
-
-
+//        ui->label_pos_Z->setText("on");
+//    }
+//    else if(axis == 2 && (value < -threshold) && move_state_Z == 0)
+//        {
+//        ui->label_neg_Z->setText("on");
+//    }
+//    else if(axis == 2 && ((value < threshold) || (value > -threshold)))
+//     {
+//        ui->label_neg_Z->setText("off");
+//        ui->label_pos_Z->setText("off");
+//    }
 
 }
 
