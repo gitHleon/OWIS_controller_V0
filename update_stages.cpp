@@ -98,6 +98,24 @@ long lim_swit= {PS90_GetSwitchState(Index,Axisid_Y)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
+if   ((state_Y == 0) && (ui->label_pos_Y->text() == "on"))
+{
+    runY(-1);
+    state_Y = 1;
+}
+
+if   ((state_Y == 0) && (ui->label_neg_Y->text() == "on"))
+{
+    runY(1);
+    state_Y = 2;
+}
+
+if   (((state_Y == 1) || (state_Y == 2)) && ((ui->label_pos_Y->text() == "off") && (ui->label_neg_Y->text() == "off")))
+{
+    stopY();
+    state_Y = 0;
+}
+
 //    ui->lineEdit_GetSwitchInput->setText(QString::number(lim_swit));
 
 //if (lim_swit==minstp || lim_swit == min)
