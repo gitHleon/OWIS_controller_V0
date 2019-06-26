@@ -204,22 +204,26 @@ void OWIS_controller::runY (double direction)
 if(!Y_stage_on && move_state_Y != 0)
         return;
 
+std::cout<<" RunY calls :"<<test_counter<<std::endl;
+test_counter++;
+
+long error;
 if (direction > 0)
-    {long error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_neg[1]);
+    {error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_neg[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
 
     error =   PS90_SetFastRefFEx(Index,Axisid_Y,joy_vel_fast_pos[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Y Axis")); }
     }
 else
-{  long error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_pos[1]);
+{  error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_pos[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
 
     error =   PS90_SetFastRefFEx(Index,Axisid_Y,joy_vel_fast_neg[1]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Y Axis")); }
 }
 
-long error = PS90_GoRef(Index,Axisid_Y,1);
+error = PS90_GoRef(Index,Axisid_Y,1);
 if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis")); }
 
 }
@@ -315,23 +319,27 @@ void OWIS_controller::runZ (double direction)
 if(!Z_stage_on && move_state_Z != 0)
         return;
 
+std::cout<<" J_size :"<<test_counter<<std::endl;
+test_counter++;
+long error;
+
 if (direction > 0)
-    {long error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_neg[2]);
+    {error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_neg[2]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
 
     error =   PS90_SetFastRefFEx(Index,Axisid_Z,joy_vel_fast_pos[2]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Z Axis")); }
     }
 else
-{  long error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_pos[2]);
+{  error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_pos[2]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
 
     error =   PS90_SetFastRefFEx(Index,Axisid_Z,joy_vel_fast_neg[2]);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Z Axis")); }
 }
 
-long error = PS90_GoRef(Index,Axisid_Z,1);
-if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis")); }
+error = PS90_GoRef(Index,Axisid_Z,1);
+//if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis")); }
 
 }
 
@@ -339,7 +347,7 @@ if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoR
 void OWIS_controller::stopZ()
 
 {
-if(!Z_stage_on && move_state_Z ==0)
+if(!Z_stage_on)
         return;
 
 long error = PS90_Stop (Index,Axisid_Z);
