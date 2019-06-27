@@ -796,6 +796,19 @@
        <string>Z Axis movement state</string>
       </property>
      </widget>
+     <widget class="QCheckBox" name="enableRealJoy">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>40</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Eneable Real Joystick</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
