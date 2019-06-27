@@ -24,6 +24,9 @@ private slots:
 
 
 void J_axes_translator(int index, int button, double value);
+void enableRealJoyClicked(bool clicked);
+void runRealJoy();
+
 
 /// initialization.cpp ///
 
@@ -71,6 +74,10 @@ void J_axes_translator(int index, int button, double value);
     void runZ (double direction);
     void stopZ ();
     void virtualJoy_Z();
+    void realJoy_X();
+    void realJoy_Y();
+    void realJoy_Z();
+
 
 private:
 
@@ -145,8 +152,14 @@ private:
    const long goRefMode [8]={0,1,2,3,4,5,6,7};
 
    int test_counter=1;
-   int state_Y=0;
+   int joy_state_X=0;
+   int joy_state_Y=0;
+   int joy_state_Z=0;
+   int mov_state_X=0;
+   int mov_state_Y=0;
+   int mov_state_Z=0;
 
+   int realJoyConnect=0;
 };
 
 #endif // OWIS_CONTROLLER_H
