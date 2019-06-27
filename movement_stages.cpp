@@ -255,7 +255,7 @@ void OWIS_controller::stopY()
 
 {
 
-if(!Y_stage_on && move_state_Y == 0)
+if(!Y_stage_on)
         return;
 
 long error = PS90_Stop (Index,Axisid_Y);
