@@ -21,11 +21,15 @@ OWIS_controller::OWIS_controller(QWidget *parent) :
  QJoysticks* J_instance = QJoysticks::getInstance();
 
     QTimer *timer = new QTimer(this);
+    QTimer *timerJoy = new QTimer(this);
+
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_X()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_Y()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updatePositions_Z()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(runRealJoy()));
+    connect(timerJoy, SIGNAL(timeout()), this, SLOT(runRealJoy()));
     timer->start(100);
+    timerJoy->start(10);
+
 
 ui->label_PS90_general_status->setText("PS90 Status: Disconnected");
 
@@ -73,6 +77,9 @@ OWIS_controller::~OWIS_controller()
 
 void OWIS_controller::J_axes_translator(int index, int axis, double value)
 {
+
+if (realJoyConnect != 1)
+    return;
    
   const double threshold = 0.05;
     if(index != 0 )
@@ -100,7 +107,6 @@ if (X_stage_on ==true)
 
 if (Y_stage_on == true)
 {
-long state_Y=0;
     ui->label_neg_Y->setText("off");
     ui->label_pos_Y->setText("off");
 
@@ -108,11 +114,11 @@ if(axis == 1 && (value > threshold)  && joy_state_Y == 0)
     {
 joy_state_Y=1;
     }
-    else if(axis == 1 && (value < -threshold) && state_Y == 0)
+    else if(axis == 1 && (value < -threshold) && joy_state_Y == 0)
     {
 joy_state_Y=-1;
     }
-    else if((axis == 1 ) && (value < threshold) && (value > -threshold) && ((state_Y == 1) || (state_Y == -1)))
+    else if((axis == 1 ) && (value < threshold) && (value > -threshold) && ((joy_state_Y == 1) || (joy_state_Y == -1)))
     { 
 joy_state_Y=0;
     }
