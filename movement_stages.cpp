@@ -137,6 +137,28 @@ runX(1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunX Axis")); }}
 }
 
+void OWIS_controller::realJoy_X()
+{
+
+    if(!X_stage_on)
+            return;
+
+if   ((joy_state_X == 1) && (mov_state_X == 0))
+{
+    runX(1);
+    mov_state_X=1;
+}
+if   ((joy_state_X == -1) && (mov_state_X == 0))
+{
+    runX(-1);
+    mov_state_X = -1;
+}
+if   ((joy_state_X == 0) && ((mov_state_X == 1) || (mov_state_X == -1)))
+{
+    stopX();
+    mov_state_X = 0;
+}
+}
 
 
 
@@ -256,6 +278,28 @@ runY(1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunY Axis")); }}
 }
 
+void OWIS_controller::realJoy_Y()
+{
+
+    if(!Y_stage_on)
+            return;
+
+if   ((joy_state_Y == 1) && (mov_state_Y == 0))
+{
+    runY(-1);
+    mov_state_Y=1;
+}
+if   ((joy_state_Y == -1) && (mov_state_Y == 0))
+{
+    runY(1);
+    mov_state_Y = -1;
+}
+if   ((joy_state_Y == 0) && ((mov_state_Y == 1) || (mov_state_Y == -1)))
+{
+    stopY();
+    mov_state_Y = 0;
+}
+}
 
 
 ///////////////////// Z STAGE ///////////////////////////
@@ -371,4 +415,26 @@ runZ(1);
 }
 
 
+void OWIS_controller::realJoy_Z()
+{
+
+    if(!Z_stage_on)
+            return;
+
+if   ((joy_state_Z == 1) && (mov_state_Z == 0))
+{
+    runZ(-1);
+    mov_state_Z=1;
+}
+if   ((joy_state_Z == -1) && (mov_state_Z == 0))
+{
+    runZ(1);
+    mov_state_Z = -1;
+}
+if   ((joy_state_Z == 0) && ((mov_state_Z == 1) || (mov_state_Z == -1)))
+{
+    stopZ();
+    mov_state_Z = 0;
+}
+}
 
