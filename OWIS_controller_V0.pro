@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 CONFIG += static
 
+include(QJoysticks-master\QJoysticks.pri)
+
 SOURCES += \
         initialization.cpp \
         main.cpp \
@@ -32,22 +34,33 @@ SOURCES += \
         movement_stages.cpp \
         owis_controller.cpp \
         update_stages.cpp
-
+#        QJoysticks-master\src\Qjoysticks.cpp
+#        QJoysticks-master\src\Qjoysticks\SDL_Joysticks.cpp \
+#        QJoysticks-master\src\Qjoysticks\VirtualJoysticks.cpp \
+#        QJoysticks-master\src\Qjoysticks\Android_Joystick.cpp
 HEADERS += \
-        owis_controller.h
+        owis_controller.h \
         x86\ps90.h
+#        QJoysticks-master\src\Qjoysticks.h
+#        QJoysticks-master\src\Qjoysticks\SDL_Joysticks.h \
+#        QJoysticks-master\src\Qjoysticks\VirtualJoystics.h \
+#        QJoysticks-master\src\Qjoysticks\Android_Joystick.h \
+#        QJoysticks-master\src\Qjoysticks\JoysticksCommon.h
+
 
 FORMS += \
         owis_controller.ui
 
-LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\ps90.dll
-LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\x86\ps90.lib
+#LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\ps90.dll
+#LIBS += F:\Users\leon\Documents\ATLAS\ENSAMBLAJE_MODULOS\setup_metrologia_OWIS\OWIS_stages\programming\Pablo\OWIS_controller_V0\x86\ps90.lib
 
-#LIBS += C:\OWIS\OWIS_controller_V0\ps90.dll
-#LIBS += C:\OWIS\OWIS_controller_V0\x86\ps90.lib
+LIBS += C:\OWIS\OWIS_controller_V0\ps90.dll
+LIBS += C:\OWIS\OWIS_controller_V0\x86\ps90.lib
 
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+

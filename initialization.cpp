@@ -9,6 +9,7 @@
 #include <iostream>
 
 
+
 void OWIS_controller::on_InitPS90Button_clicked()
 {
     //See example code and LabView functions
@@ -73,6 +74,9 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error =  PS90_SetStageAttributes(Index,Axisid_X,pitch[0],increments_per_rev[0],gear_reduction_ratio[0]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetStageAttributes X Axis")); }
 
+        error =  PS90_SetCalcResol(Index,Axisid_X,res_motor[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetCalcResol X Axis")); }
+
         error =  PS90_SetMsysResol(Index,Axisid_X,lin_res[0]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetMsysResol X Axis")); }
 
@@ -80,32 +84,36 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetTargetMode X Axis")); }
         ui->label_axis_target_mode_X->setText("X Axis Target mode : Relative");
 
-        error =  PS90_SetAccel(Index,Axisid_X,acc[0]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetAccel X Axis")); }
 
-        error =  PS90_SetDecel(Index,Axisid_X,dacc[0]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetDecel X Axis")); }
+        error =  PS90_SetAccelEx(Index,Axisid_X,acc[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetAccelEx X Axis")); }
+
+        error = PS90_SetDecelEx(Index,Axisid_X,dacc[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetDecelEx X Axis")); }
 
         error =   PS90_SetJerk(Index,Axisid_X,jacc[0]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetJerk X Axis")); }
 
-        error =   PS90_SetRefDecel(Index,Axisid_X,ref_dacc[0]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefDecel X Axis")); }
+        error =   PS90_SetRefDecelEx(Index,Axisid_X,ref_dacc[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefDecelEx X Axis")); }
 
         error =   PS90_SetVel(Index,Axisid_X,vel[0]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel X Axis")); }
 
-         error =   PS90_SetPosVel(Index,Axisid_X,pos_vel[0]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetPosVel X Axis")); }
+         error =   PS90_SetPosFEx(Index,Axisid_X,pos_vel[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetPosFEx X Axis")); }
 
-         error =   PS90_SetSlowRefVel(Index,Axisid_X,ref_vel_slow[0]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefVel X Axis")); }
+         error =   PS90_SetSlowRefFEx(Index,Axisid_X,ref_vel_slow[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx X Axis")); }
 
-        error =   PS90_SetFastRefVel(Index,Axisid_X,ref_vel_fast[0]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefVel X Axis")); }
+        error =   PS90_SetFastRefFEx(Index,Axisid_X,ref_vel_fast[0]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx X Axis")); }
 
         error =   PS90_SetFreeVel(Index,Axisid_X,free_vel[0]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFreeVel X Axis")); }
+
+        error =   PS90_SetRefSwitch(Index,Axisid_X,ref_switch_x);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefSwitch X Axis")); }
 
 
         double value = PS90_GetPositionEx(Index,Axisid_X);
@@ -113,13 +121,10 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis")); }
         ui->lineEdit_axis_pos_X->setText(QString::number(value));
 
-     //   ui->lineEdit_Target_value_X->setText(QString::number(0));
-
+    
 
 
         //Y Axis : 2//
-
-
 
 
 
@@ -168,6 +173,9 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error =  PS90_SetStageAttributes(Index,Axisid_Y,pitch[1],increments_per_rev[1],gear_reduction_ratio[1]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetStageAttributes Y Axis")); }
 
+        error =  PS90_SetCalcResol(Index,Axisid_Y,res_motor[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetCalcResol Y Axis")); }
+
         error =  PS90_SetMsysResol(Index,Axisid_Y,lin_res[1]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetMsysResol Y Axis")); }
 
@@ -175,32 +183,36 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetTargetMode Y Axis")); }
         ui->label_axis_target_mode_X->setText("Y Axis Target mode : Relative");
 
-        error =  PS90_SetAccel(Index,Axisid_Y,acc[1]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetAccel Y Axis")); }
+        error =  PS90_SetAccelEx(Index,Axisid_Y,acc[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetAccelEx Y Axis")); }
 
-        error =  PS90_SetDecel(Index,Axisid_Y,dacc[1]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetDecel Y Axis")); }
+        error =  PS90_SetDecelEx(Index,Axisid_Y,dacc[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetDecelEx Y Axis")); }
 
         error =   PS90_SetJerk(Index,Axisid_Y,jacc[1]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetJerk Y Axis")); }
 
-        error =   PS90_SetRefDecel(Index,Axisid_Y,ref_dacc[1]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefDecel Y Axis")); }
+        error =   PS90_SetRefDecelEx(Index,Axisid_Y,ref_dacc[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefDecelEx Y Axis")); }
 
         error =   PS90_SetVel(Index,Axisid_Y,vel[1]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel Y Axis")); }
 
-         error =   PS90_SetPosVel(Index,Axisid_Y,pos_vel[1]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetPosVel Y Axis")); }
+        error =   PS90_SetPosFEx(Index,Axisid_Y,pos_vel[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetPosFEx Y Axis")); }
 
-         error =   PS90_SetSlowRefVel(Index,Axisid_Y,ref_vel_slow[1]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefVel Y Axis")); }
+        error =   PS90_SetSlowRefFEx(Index,Axisid_Y,ref_vel_slow[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
 
-        error =   PS90_SetFastRefVel(Index,Axisid_Y,ref_vel_fast[1]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefVel Y Axis")); }
+        error =   PS90_SetFastRefFEx(Index,Axisid_Y,ref_vel_fast[1]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Y Axis")); }
 
         error =   PS90_SetFreeVel(Index,Axisid_Y,free_vel[1]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFreeVel Y Axis")); }
+
+        error =   PS90_SetRefSwitch(Index,Axisid_Y,ref_switch_y);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefSwitch Y Axis")); }
+
 
 
         value = PS90_GetPositionEx(Index,Axisid_Y);
@@ -208,7 +220,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis")); }
         ui->lineEdit_axis_pos_Y->setText(QString::number(value));
 
-       // ui->lineEdit_Target_value_Y->setText(QString::number(0));
+    
 
 
 
@@ -262,6 +274,9 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error =  PS90_SetStageAttributes(Index,Axisid_Z,pitch[2],increments_per_rev[2],gear_reduction_ratio[2]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetStageAttributes Z Axis")); }
 
+        error =  PS90_SetCalcResol(Index,Axisid_Z,res_motor[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetCalcResol Z Axis")); }
+
         error =  PS90_SetMsysResol(Index,Axisid_Z,lin_res[2]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetMsysResol Z Axis")); }
 
@@ -269,32 +284,35 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetTargetMode Z Axis")); }
         ui->label_axis_target_mode_X->setText("Z Axis Target mode : Relative");
 
-        error =  PS90_SetAccel(Index,Axisid_Z,acc[2]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetAccel Z Axis")); }
+        error =  PS90_SetAccelEx(Index,Axisid_Z,acc[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetAccelEx Z Axis")); }
 
-        error =  PS90_SetDecel(Index,Axisid_Z,dacc[2]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetDecel Z Axis")); }
+        error =  PS90_SetDecelEx(Index,Axisid_Z,dacc[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetDecelEx Z Axis")); }
 
         error =   PS90_SetJerk(Index,Axisid_Z,jacc[2]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetJerk Z Axis")); }
 
-        error =   PS90_SetRefDecel(Index,Axisid_Z,ref_dacc[2]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefDecel Z Axis")); }
+        error =   PS90_SetRefDecelEx(Index,Axisid_Z,ref_dacc[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefDecelEx Z Axis")); }
 
         error =   PS90_SetVel(Index,Axisid_Z,vel[2]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel Z Axis")); }
 
-         error =   PS90_SetPosVel(Index,Axisid_Z,pos_vel[2]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetPosVel Z Axis")); }
+        error =   PS90_SetPosFEx(Index,Axisid_Z,pos_vel[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetPosFEx Z Axis")); }
 
-         error =   PS90_SetSlowRefVel(Index,Axisid_Z,ref_vel_slow[2]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefVel Z Axis")); }
+        error =   PS90_SetSlowRefFEx(Index,Axisid_Z,ref_vel_slow[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
 
-        error =   PS90_SetFastRefVel(Index,Axisid_Z,ref_vel_fast[2]);
-        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefVel Z Axis")); }
+        error =   PS90_SetFastRefFEx(Index,Axisid_Z,ref_vel_fast[2]);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Z Axis")); }
 
         error =   PS90_SetFreeVel(Index,Axisid_Z,free_vel[2]);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFreeVel Z Axis")); }
+
+        error =   PS90_SetRefSwitch(Index,Axisid_Z,ref_switch_z);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefSwitch Z Axis")); }
 
 
         value = PS90_GetPositionEx(Index,Axisid_Z);
@@ -302,7 +320,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis")); }
         ui->lineEdit_axis_pos_Z->setText(QString::number(value));
 
-       // ui->lineEdit_Target_value_Z->setText(QString::number(0));
+    
 
 
     }
@@ -333,8 +351,30 @@ void OWIS_controller::on_DisconnectButton_clicked()
 {
     if(!PS90_connected)
         return;
+long error;
 
-    long error = PS90_Disconnect(1);
+if (X_stage_on != 0)
+{
+X_stage_on=false;
+    error = PS90_MotorOff(Index,Axisid_X);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff X Axis "));}
+}
+
+if (Y_stage_on != 0)
+{
+    Y_stage_on=false;
+     error = PS90_MotorOff(Index,Axisid_Y);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff Y Axis "));}
+ }
+
+if (Z_stage_on != 0)
+{
+    Z_stage_on=false;
+     error = PS90_MotorOff(Index,Axisid_Z);
+    if (error != 0 ){QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MotorOff Z Axis "));}
+}
+
+     error = PS90_Disconnect(1);
     if (error != 0 )
     { QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Disconnect"));
     }else{

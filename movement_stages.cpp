@@ -7,8 +7,9 @@
 #include "x86\ps90.h"
 #include <QTimer>
 #include <iostream>
+#include <windows.h>
 
-// X STAGES //
+
 
 void OWIS_controller::on_stopButton_clicked()
 {
@@ -22,7 +23,7 @@ void OWIS_controller::on_stopButton_clicked()
 }
 
 
-///////////////////////// X STAGES /////////////////////
+///////////////////////// X STAGE /////////////////////
 
 void OWIS_controller::on_switchModeButton_X_clicked()
 {
@@ -42,13 +43,126 @@ void OWIS_controller::on_moveAxisButton_X_clicked()
 {
     if(!X_stage_on)
         return;
+
+
     double Tvalue = ui->doubleSpinBox_newTarget_value_X->value();
     long error = PS90_MoveEx(Index,Axisid_X,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
 }
 
+void OWIS_controller::on_homeButton_X_clicked()
+{
+    if(!X_stage_on)
+        return;
+   
+    long error =   PS90_SetSlowRefFEx(Index,Axisid_X,ref_vel_slow[0]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx X Axis")); }
 
- ////////////////////////Y STAGE ///////////////////////
+    error =   PS90_SetFastRefFEx(Index,Axisid_X,ref_vel_fast[0]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx X Axis")); }
+
+
+   
+    error = PS90_GoRef(Index,Axisid_X,goRefMode[1]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef X Axis- need to add specification!!")); }
+
+    long move_state=1;
+
+     while (move_state != 0){
+         move_state = PS90_GetMoveState(Index,Axisid_X);
+         error = PS90_GetReadError(Index);
+         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
+     }
+
+     Sleep(100);
+
+     error = PS90_ResetCounter(Index,Axisid_X);
+     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_ResetCounter X Axis- need to add specification!!")); }
+
+
+}
+
+
+void OWIS_controller::runX (double direction)
+{
+if(!X_stage_on)
+        return;
+
+
+if (direction > 0)
+    {long error =   PS90_SetSlowRefFEx(Index,Axisid_X,joy_vel_slow_neg[0]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx X Axis")); }
+
+    error =   PS90_SetFastRefFEx(Index,Axisid_X,joy_vel_fast_pos[0]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx X Axis")); }
+    }
+else
+{  long error =   PS90_SetSlowRefFEx(Index,Axisid_X,joy_vel_slow_pos[0]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx X Axis")); }
+
+    error =   PS90_SetFastRefFEx(Index,Axisid_X,joy_vel_fast_neg[0]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx X Axis")); }
+}
+
+long error = PS90_GoRef(Index,Axisid_X,1);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef X Axis")); }
+
+}
+
+
+void OWIS_controller::stopX()
+
+{
+
+if(!X_stage_on)
+        return;
+
+long error = PS90_Stop (Index,Axisid_X);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop X Axis"));
+}
+}
+
+void OWIS_controller::virtualJoy_X()
+
+{
+
+if(!X_stage_on)
+        return;
+
+if (sender() == ui->joyNegButton_X)
+runX(-1);
+//if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunX Axis")); }}
+ else if (sender() == ui->joyPosButton_X)
+runX(1);
+//if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunX Axis")); }}
+}
+
+void OWIS_controller::realJoy_X()
+{
+
+    if(!X_stage_on)
+            return;
+
+if   ((joy_state_X == 1) && (mov_state_X == 0))
+{
+    runX(1);
+    mov_state_X=1;
+}
+if   ((joy_state_X == -1) && (mov_state_X == 0))
+{
+    runX(-1);
+    mov_state_X = -1;
+}
+if   ((joy_state_X == 0) && ((mov_state_X == 1) || (mov_state_X == -1)))
+{
+    stopX();
+    mov_state_X = 0;
+}
+}
+
+
+
+ //////////////////////// Y STAGE ///////////////////////
 
 
 void OWIS_controller::on_switchModeButton_Y_clicked()
@@ -71,6 +185,120 @@ void OWIS_controller::on_moveAxisButton_Y_clicked()
     double Tvalue = ui->doubleSpinBox_newTarget_value_Y->value();
     long error = PS90_MoveEx(Index,Axisid_Y,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Y Axis- need to add specification!!")); }
+}
+
+void OWIS_controller::on_homeButton_Y_clicked()
+{
+    if(!Y_stage_on)
+        return;
+   
+
+long error =   PS90_SetSlowRefFEx(Index,Axisid_Y,ref_vel_slow[1]);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
+
+error =   PS90_SetFastRefFEx(Index,Axisid_Y,ref_vel_fast[1]);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Y Axis")); }
+
+error = PS90_GoRef(Index,Axisid_Y,goRefMode[1]);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis- need to add specification!!")); }
+
+   long move_state=1;
+
+    while (move_state != 0){
+        move_state = PS90_GetMoveState(Index,Axisid_Y);
+        error = PS90_GetReadError(Index);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Y Axis ")); }
+    }
+
+    Sleep(100);
+
+    error = PS90_ResetCounter(Index,Axisid_Y);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_ResetCounter Y Axis- need to add specification!!")); }
+
+
+}
+
+
+
+void OWIS_controller::runY (double direction)
+{
+
+if(!Y_stage_on && move_state_Y != 0)
+        return;
+
+std::cout<<" RunY calls :"<<test_counter<<std::endl;
+test_counter++;
+
+long error;
+if (direction > 0)
+    {error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_neg[1]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
+
+    error =   PS90_SetFastRefFEx(Index,Axisid_Y,joy_vel_fast_pos[1]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Y Axis")); }
+    }
+else
+{  error =   PS90_SetSlowRefFEx(Index,Axisid_Y,joy_vel_slow_pos[1]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Y Axis")); }
+
+    error =   PS90_SetFastRefFEx(Index,Axisid_Y,joy_vel_fast_neg[1]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Y Axis")); }
+}
+
+error = PS90_GoRef(Index,Axisid_Y,1);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Y Axis")); }
+
+}
+
+
+void OWIS_controller::stopY()
+
+{
+
+if(!Y_stage_on)
+        return;
+
+long error = PS90_Stop (Index,Axisid_Y);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop Y Axis"));
+}
+}
+
+void OWIS_controller::virtualJoy_Y()
+
+{
+
+if(!Y_stage_on)
+        return;
+
+if (sender() == ui->joyNegButton_Y)
+runY(-1);
+//if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunY Axis")); }}
+ else if (sender() == ui->joyPosButton_Y)
+runY(1);
+//if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunY Axis")); }}
+}
+
+void OWIS_controller::realJoy_Y()
+{
+
+    if(!Y_stage_on)
+            return;
+
+if   ((joy_state_Y == 1) && (mov_state_Y == 0))
+{
+    runY(-1);
+    mov_state_Y=1;
+}
+if   ((joy_state_Y == -1) && (mov_state_Y == 0))
+{
+    runY(1);
+    mov_state_Y = -1;
+}
+if   ((joy_state_Y == 0) && ((mov_state_Y == 1) || (mov_state_Y == -1)))
+{
+    stopY();
+    mov_state_Y = 0;
+}
 }
 
 
@@ -100,5 +328,113 @@ void OWIS_controller::on_moveAxisButton_Z_clicked()
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Z Axis- need to add specification!!")); }
 }
 
+void OWIS_controller::on_homeButton_Z_clicked()
+{
+    if(!Z_stage_on)
+        return;
+   
 
+long error =   PS90_SetSlowRefFEx(Index,Axisid_Z,ref_vel_slow[2]);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
+
+error =   PS90_SetFastRefFEx(Index,Axisid_Z,ref_vel_fast[2]);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Z Axis")); }
+
+error = PS90_GoRef(Index,Axisid_Z,goRefMode[1]);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis- need to add specification!!")); }
+
+    long move_state=1;
+
+     while (move_state != 0){
+         move_state = PS90_GetMoveState(Index,Axisid_Z);
+         error = PS90_GetReadError(Index);
+         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState Z Axis ")); }
+     }
+
+     Sleep(100);
+     error = PS90_ResetCounter(Index,Axisid_Z);
+     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_ResetCounter Z Axis- need to add specification!!")); }
+}
+
+
+void OWIS_controller::runZ (double direction)
+{
+
+if(!Z_stage_on && move_state_Z != 0)
+        return;
+
+std::cout<<" J_size :"<<test_counter<<std::endl;
+test_counter++;
+long error;
+
+if (direction > 0)
+    {error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_neg[2]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
+
+    error =   PS90_SetFastRefFEx(Index,Axisid_Z,joy_vel_fast_pos[2]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Z Axis")); }
+    }
+else
+{  error =   PS90_SetSlowRefFEx(Index,Axisid_Z,joy_vel_slow_pos[2]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetSlowRefFEx Z Axis")); }
+
+    error =   PS90_SetFastRefFEx(Index,Axisid_Z,joy_vel_fast_neg[2]);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetFastRefFEx Z Axis")); }
+}
+
+error = PS90_GoRef(Index,Axisid_Z,1);
+//if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GoRef Z Axis")); }
+
+}
+
+
+void OWIS_controller::stopZ()
+
+{
+if(!Z_stage_on)
+        return;
+
+long error = PS90_Stop (Index,Axisid_Z);
+if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_Stop Z Axis"));
+}
+}
+
+void OWIS_controller::virtualJoy_Z()
+
+{
+
+if(!Z_stage_on)
+        return;
+    
+if (sender() == ui->joyNegButton_Z)
+runZ(-1);
+//if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
+ else if (sender() == ui->joyPosButton_Z)
+runZ(1);
+//if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
+}
+
+
+void OWIS_controller::realJoy_Z()
+{
+
+    if(!Z_stage_on)
+            return;
+
+if   ((joy_state_Z == 1) && (mov_state_Z == 0))
+{
+    runZ(-1);
+    mov_state_Z=1;
+}
+if   ((joy_state_Z == -1) && (mov_state_Z == 0))
+{
+    runZ(1);
+    mov_state_Z = -1;
+}
+if   ((joy_state_Z == 0) && ((mov_state_Z == 1) || (mov_state_Z == -1)))
+{
+    stopZ();
+    mov_state_Z = 0;
+}
+}
 
