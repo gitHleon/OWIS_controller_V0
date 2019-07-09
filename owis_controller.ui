@@ -225,14 +225,14 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>-10</x>
+      <x>10</x>
       <y>250</y>
       <width>941</width>
       <height>401</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -807,6 +807,47 @@
       </property>
       <property name="text">
        <string>Eneable Real Joystick</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Tests</string>
+     </attribute>
+     <widget class="QPushButton" name="SendCommandUltimusButton">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>50</y>
+        <width>101</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>send command</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dispenserCommand">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>60</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_stage_state_Z_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Command to send to Ultimus V</string>
       </property>
      </widget>
     </widget>
