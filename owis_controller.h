@@ -26,7 +26,8 @@ private slots:
 void J_axes_translator(int index, int button, double value);
 void enableRealJoyClicked(bool clicked);
 void runRealJoy();
-
+bool TalkSR232(const std::vector<std::string> &arguments);
+void dispense_order();
 
 /// initialization.cpp ///
 
