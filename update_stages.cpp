@@ -36,7 +36,7 @@ void OWIS_controller::updatePositions_X()
     else
         ui->label_axis_movement_X->setText(" X Axis still");
 
-long lim_swit = {PS90_GetSwitchState(Index,Axisid_X)};
+//long lim_swit = {PS90_GetSwitchState(Index,Axisid_X)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
@@ -94,7 +94,7 @@ void OWIS_controller::updatePositions_Y()
     else
         ui->label_axis_movement_Y->setText(" Y Axis still");
 
-long lim_swit= {PS90_GetSwitchState(Index,Axisid_Y)};
+//long lim_swit= {PS90_GetSwitchState(Index,Axisid_Y)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis ")); }
 
@@ -154,7 +154,7 @@ void OWIS_controller::updatePositions_Z()
         ui->label_axis_movement_Z->setText(" Z Axis still");
 
 
-long lim_swit= {PS90_GetSwitchState(Index,Axisid_Z)};
+//long lim_swit= {PS90_GetSwitchState(Index,Axisid_Z)};
     error = PS90_GetReadError(Index);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetSwitchState X Axis "));}
 
