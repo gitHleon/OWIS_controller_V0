@@ -222,7 +222,7 @@
      <string>Shut on Z</string>
     </property>
    </widget>
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="dispenserInitbutton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -817,8 +817,8 @@
      <widget class="QPushButton" name="SendCommandUltimusButton">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>50</y>
+        <x>320</x>
+        <y>320</y>
         <width>101</width>
         <height>41</height>
        </rect>
@@ -830,8 +830,8 @@
      <widget class="QLineEdit" name="dispenserCommand">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>60</y>
+        <x>190</x>
+        <y>330</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -841,13 +841,219 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>60</y>
+        <y>330</y>
         <width>161</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
        <string>Command to send to Ultimus V</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dispenserResponse">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>330</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_stage_state_Z_3">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>330</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ultimus Response</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dispenserPressure">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>70</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dispenserTime">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>150</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="dispenserModeLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dispensing Mode:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="dispenserModeButton">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>20</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Switch TT/MT Mode</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dispenserVacuum">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>190</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dispenserPressureUnits">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>110</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="dispenserPressureLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pressure:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="dispenserPressureUnitsLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>110</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dispensing units:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="dispenserTimeLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>150</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dispensing time:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="dispenserVacuumLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>190</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dispensing Vacuum:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="changePressureButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>70</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change Pressure</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="changeUnitsButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>110</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change Units</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="changeTimeButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>150</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change Time</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="changeVacuumButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>190</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change Vacuum</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="InitGlueDispenserButton">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>20</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Init glue dispenser</string>
       </property>
      </widget>
     </widget>
