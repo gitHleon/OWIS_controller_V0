@@ -26,8 +26,16 @@ private slots:
 void J_axes_translator(int index, int button, double value);
 void enableRealJoyClicked(bool clicked);
 void runRealJoy();
-bool TalkSR232(const std::vector<std::string> &arguments);
-void dispense_order();
+bool RS232V(QByteArray command);
+bool RS232V();
+QByteArray RS232V_fb(QByteArray command);
+bool RS232V_fb();
+bool dispenser_init();
+bool dispenser_mode();
+bool dispenser_pressure();
+bool dispenser_pressureUnits();
+bool dispenser_time();
+bool dispenser_vacuum();
 
 /// initialization.cpp ///
 
