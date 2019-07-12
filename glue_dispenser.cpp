@@ -677,30 +677,20 @@ return feedback;
 
 
 bool OWIS_controller::RS232V()
-
 {
-<<<<<<< HEAD
-std::vector<std::string> arguments;
-//char command[];
-//arguments=ui->dispenserCommand->text();
-//QString aux=ui->dispenserCommand->text();
-//arguments.push_back(aux.toStdString());
-arguments.push_back("DI ");
-TalkSR232(arguments);
-
-=======
 QByteArray command;
+QByteArray response;
 command.append(ui->dispenserCommand->text());
-if(!RS232V(command))
+response.append(RS232V(command));
+if(response=="error")
  {   qDebug() << "Error in sending command";
+ui->dispenserResponse->setText("error");
     return false;
  }
  else
-ui->dispenserResponse->setText("Success");
+ui->dispenserResponse->setText(response);
 return true;
->>>>>>> 8c5a970d6746fcf0249c399368b2f89f0ee40956
 }
-
 
 
 bool OWIS_controller::RS232V_fb()
