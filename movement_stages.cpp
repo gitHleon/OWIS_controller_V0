@@ -8,10 +8,10 @@
 #include <QTimer>
 #include <iostream>
 #include <windows.h>
+#include <QtDebug>
 
 
-
-void OWIS_controller::on_stopButton_clicked()
+void OWIS_controller::stopStages()
 {
     if(!PS90_connected)
         return;
@@ -25,7 +25,7 @@ void OWIS_controller::on_stopButton_clicked()
 
 ///////////////////////// X STAGE /////////////////////
 
-void OWIS_controller::on_switchModeButton_X_clicked()
+void OWIS_controller::switchMode_X()
 {
     if(!PS90_connected)
         return;
@@ -39,18 +39,23 @@ void OWIS_controller::on_switchModeButton_X_clicked()
 }
 
 
-void OWIS_controller::on_moveAxisButton_X_clicked()
+void OWIS_controller::move_X(double Tvalue)
 {
     if(!X_stage_on)
         return;
-
-
-    double Tvalue = ui->doubleSpinBox_newTarget_value_X->value();
     long error = PS90_MoveEx(Index,Axisid_X,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
 }
+void OWIS_controller::moveUI_X()
+{
+    if(!X_stage_on)
+        return;
+double value=ui->doubleSpinBox_newTarget_value_X->value();
+move_X(value);
+}
 
-void OWIS_controller::on_homeButton_X_clicked()
+
+void OWIS_controller::home_X()
 {
     if(!X_stage_on)
         return;
@@ -160,12 +165,31 @@ if   ((joy_state_X == 0) && ((mov_state_X == 1) || (mov_state_X == -1)))
 }
 }
 
+bool OWIS_controller::setVelocity_X(long value)
 
+{
+    if(!X_stage_on)
+    {    qDebug() << "Motor X is OFF";
+        return false;}
+
+    long error =   PS90_SetVel(Index,Axisid_X,value);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel X Axis")); }
+    ui->labelVelocity_X->setText(QString::number(value));
+    return true;
+}
+
+bool OWIS_controller::setVelocityUI_X()
+
+{
+double value=ui->doubleSpinBox_newVelocity_X->value();
+setVelocity_X(value);
+return true;
+}
 
  //////////////////////// Y STAGE ///////////////////////
 
 
-void OWIS_controller::on_switchModeButton_Y_clicked()
+void OWIS_controller::switchMode_Y()
 {
     if(!PS90_connected)
         return;
@@ -178,16 +202,24 @@ void OWIS_controller::on_switchModeButton_Y_clicked()
         error = PS90_SetTargetMode(Index,Axisid_Y,0);
 }
 
-void OWIS_controller::on_moveAxisButton_Y_clicked()
+void OWIS_controller::move_Y(double Tvalue)
 {
     if(!Y_stage_on)
         return;
-    double Tvalue = ui->doubleSpinBox_newTarget_value_Y->value();
+  //  double Tvalue = ui->doubleSpinBox_newTarget_value_Y->value();
     long error = PS90_MoveEx(Index,Axisid_Y,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Y Axis- need to add specification!!")); }
 }
 
-void OWIS_controller::on_homeButton_Y_clicked()
+void OWIS_controller::moveUI_Y()
+{
+    if(!Y_stage_on)
+        return;
+double value=ui->doubleSpinBox_newTarget_value_Y->value();
+move_Y(value);
+}
+
+void OWIS_controller::home_Y()
 {
     if(!Y_stage_on)
         return;
@@ -302,10 +334,30 @@ if   ((joy_state_Y == 0) && ((mov_state_Y == 1) || (mov_state_Y == -1)))
 }
 
 
+bool OWIS_controller::setVelocity_Y(long value)
+
+{
+    if(!Y_stage_on)
+    {    qDebug() << "Motor Y is OFF";
+        return false;}
+
+    long error =   PS90_SetVel(Index,Axisid_Y,value);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel Y Axis")); }
+    ui->labelVelocity_Y->setText(QString::number(value));
+return true;
+}
+
+bool OWIS_controller::setVelocityUI_Y()
+
+{
+double value=ui->doubleSpinBox_newVelocity_Y->value();
+setVelocity_Y(value);
+return true;
+}
 ///////////////////// Z STAGE ///////////////////////////
 
 
-void OWIS_controller::on_switchModeButton_Z_clicked()
+void OWIS_controller::switchMode_Z()
 {
     if(!PS90_connected)
         return;
@@ -319,16 +371,24 @@ void OWIS_controller::on_switchModeButton_Z_clicked()
 }
 
 
-void OWIS_controller::on_moveAxisButton_Z_clicked()
+void OWIS_controller::move_Z(double Tvalue)
 {
     if(!Z_stage_on)
         return;
-    double Tvalue = ui->doubleSpinBox_newTarget_value_Z->value();
+//double Tvalue = ui->doubleSpinBox_newTarget_value_Z->value();
     long error = PS90_MoveEx(Index,Axisid_Z,Tvalue,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx Z Axis- need to add specification!!")); }
 }
 
-void OWIS_controller::on_homeButton_Z_clicked()
+void OWIS_controller::moveUI_Z()
+{
+    if(!Z_stage_on)
+        return;
+double value=ui->doubleSpinBox_newTarget_value_Z->value();
+move_Z(value);
+}
+
+void OWIS_controller::home_Z()
 {
     if(!Z_stage_on)
         return;
@@ -436,5 +496,26 @@ if   ((joy_state_Z == 0) && ((mov_state_Z == 1) || (mov_state_Z == -1)))
     stopZ();
     mov_state_Z = 0;
 }
+}
+
+bool OWIS_controller::setVelocity_Z(long value)
+
+{
+    if(!Z_stage_on)
+   {     qDebug() << "Motor Z is OFF";
+        return false;}
+
+    long error =   PS90_SetVel(Index,Axisid_Z,value);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel Z Axis")); }
+    ui->labelVelocity_Z->setText(QString::number(value));
+return true;
+}
+
+bool OWIS_controller::setVelocityUI_Z()
+
+{
+double value=ui->doubleSpinBox_newVelocity_Z->value();
+setVelocity_Z(value);
+return true;
 }
 
