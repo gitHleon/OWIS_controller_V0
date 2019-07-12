@@ -63,7 +63,7 @@ bool OWIS_controller::TalkSR232( const std::vector<std::string> &arguments){
     QByteArray readData;
     QByteArray writeData;
     QSerialPort serialPort;
-    const QString serialPortName = "COM1"; //to modify according to the serial port used
+    const QString serialPortName = "COM4"; //to modify according to the serial port used
     serialPort.setPortName(serialPortName);
     serialPort.setBaudRate(QSerialPort::Baud115200); // set BaudRate to 115200
     serialPort.setParity(QSerialPort::NoParity); //set Parity Bit to None
@@ -201,8 +201,9 @@ void OWIS_controller::dispense_order()
 std::vector<std::string> arguments;
 //char command[];
 //arguments=ui->dispenserCommand->text();
-QString aux=ui->dispenserCommand->text();
-arguments.push_back(aux.toStdString());
+//QString aux=ui->dispenserCommand->text();
+//arguments.push_back(aux.toStdString());
+arguments.push_back("DI ");
 TalkSR232(arguments);
 
 }
