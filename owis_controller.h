@@ -64,16 +64,19 @@ bool dispenser_vacuum();
 
 /// movement_stages ///
 
-    void on_stopButton_clicked();
-    void on_switchModeButton_X_clicked();
-    void on_switchModeButton_Y_clicked();
-    void on_switchModeButton_Z_clicked();
-    void on_moveAxisButton_X_clicked();
-    void on_moveAxisButton_Y_clicked();
-    void on_moveAxisButton_Z_clicked();
-    void on_homeButton_X_clicked();
-    void on_homeButton_Y_clicked();
-    void on_homeButton_Z_clicked();
+    void stopStages();
+    void switchMode_X();
+    void switchMode_Y();
+    void switchMode_Z();
+    void move_X(double Tvalue);
+    void moveUI_X();
+    void move_Y(double Tvalue);
+    void moveUI_Y();
+    void move_Z(double Tvalue);
+    void moveUI_Z();
+    void home_X();
+    void home_Y();
+    void home_Z();
     void runX (double direction);
     void stopX ();
     void virtualJoy_X();
@@ -86,7 +89,12 @@ bool dispenser_vacuum();
     void realJoy_X();
     void realJoy_Y();
     void realJoy_Z();
-
+    bool setVelocity_X(long value);
+    bool setVelocityUI_X();
+    bool setVelocity_Y(long value);
+    bool setVelocityUI_Y();
+    bool setVelocity_Z(long value);
+    bool setVelocityUI_Z();
 
 private:
 
