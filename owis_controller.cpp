@@ -54,6 +54,18 @@ ui->label_stage_state_Z->setText("Z Stage: Off");
 
  connect(ui->enableRealJoy, SIGNAL(toggled(bool)), this, SLOT(enableRealJoyClicked(bool)));
 
+
+connect(ui->SendCommandUltimusButton, SIGNAL(clicked(bool)), this,SLOT(RS232V()));
+connect(ui->InitGlueDispenserButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_init()));
+connect(ui->dispenserModeButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_mode()));
+connect(ui->changePressureButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_pressure()));
+connect(ui->changeUnitsButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_pressureUnits()));
+connect(ui->changeTimeButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_time()));
+connect(ui->changeVacuumButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_vacuum()));
+
+
+
+
 // conexión con el Joystick //
 
     int J_number = J_instance->count();
