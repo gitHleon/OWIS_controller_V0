@@ -120,7 +120,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error = PS90_GetReadError(Index);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis")); }
         ui->lineEdit_axis_pos_X->setText(QString::number(value));
-
+        ui->labelVelocity_X->setText(QString::number(vel[0]));
     
 
 
@@ -219,6 +219,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error = PS90_GetReadError(Index);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis")); }
         ui->lineEdit_axis_pos_Y->setText(QString::number(value));
+        ui->labelVelocity_Y->setText(QString::number(vel[1]));
 
     
 
@@ -319,6 +320,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error = PS90_GetReadError(Index);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis")); }
         ui->lineEdit_axis_pos_Z->setText(QString::number(value));
+        ui->labelVelocity_Z->setText(QString::number(vel[2]));
 
     
 
@@ -344,6 +346,25 @@ void OWIS_controller::on_InitPS90Button_clicked()
     ui->doubleSpinBox_newTarget_value_Z->setSingleStep(1);
     ui->doubleSpinBox_newTarget_value_Z->setValue(1.0);
 
+    ui->doubleSpinBox_newVelocity_X->setDecimals(2);
+    ui->doubleSpinBox_newVelocity_X->setMaximum(5000);
+    ui->doubleSpinBox_newVelocity_X->setMinimum(-5000);
+    ui->doubleSpinBox_newVelocity_X->setSingleStep(1);
+    ui->doubleSpinBox_newVelocity_X->setValue(1.0);
+
+
+    ui->doubleSpinBox_newVelocity_Y->setDecimals(2);
+    ui->doubleSpinBox_newVelocity_Y->setMaximum(5000);
+    ui->doubleSpinBox_newVelocity_Y->setMinimum(-5000);
+    ui->doubleSpinBox_newVelocity_Y->setSingleStep(1);
+    ui->doubleSpinBox_newVelocity_Y->setValue(1.0);
+
+
+    ui->doubleSpinBox_newVelocity_Z->setDecimals(2);
+    ui->doubleSpinBox_newVelocity_Z->setMaximum(5000);
+    ui->doubleSpinBox_newVelocity_Z->setMinimum(-5000);
+    ui->doubleSpinBox_newVelocity_Z->setSingleStep(1);
+    ui->doubleSpinBox_newVelocity_Z->setValue(1.0);
 }
 
 
