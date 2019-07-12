@@ -30,6 +30,7 @@ OWIS_controller::OWIS_controller(QWidget *parent) :
     timer->start(100);
     timerJoy->start(10);
 
+    connect(ui->SendCommandUltimusButton, SIGNAL(clicked()), this, SLOT(dispense_order()));
 
 ui->label_PS90_general_status->setText("PS90 Status: Disconnected");
 
