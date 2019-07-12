@@ -19,6 +19,9 @@
 #include <unistd.h>
 #include <conio.h>
 #include <QTimer>
+#include <QtDebug>
+#include <stdio.h>
+#include <stdlib.h>
 
 //function to write in appropriate way exadecimal number to ultimusV
 QByteArray int_tohexQByteArray_UltimusV(int input){
@@ -43,23 +46,164 @@ QByteArray int_tohexQByteArray_UltimusV(int input){
 }
 
 
-bool OWIS_controller::TalkSR232( const std::vector<std::string> &arguments){
-    //    int stx = 2;
-    //    int etx = 3;
-    //    int eot = 4;
-    //    int enq = 5;
-    //    int ack = 6;
-    //    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
-    //            std::cout << "Name : " << info.portName().toLocal8Bit().constData()<<std::endl;
-    //            std::cout << "Description : " << info.description().toLocal8Bit().constData()<<std::endl;
-    //            std::cout << "Manufacturer: " << info.manufacturer().toLocal8Bit().constData()<<std::endl;
-    //            // Example use QSerialPort
-    //            QSerialPort serial;
-    //            serial.setPort(info);
-    //            if (serial.open(QIODevice::ReadWrite))
-    //                serial.close();
-    //        }
-    bool debug = true;
+bool OWIS_controller::dispenser_init()
+
+{
+
+if(!RS232V("E6  00"))
+ {   qDebug() << "Error in E6   command, pressure units";
+    return false;
+ }
+ ui->dispenserPressureUnitsLabel->setText("Dispensing units: psi");
+
+// Temporized Mode
+
+if(!RS232V("TT  "))
+ {   qDebug() << "Error in TT   command, temporized mode";
+    return false;
+
+}
+ui->dispenserModeLabel->setText("Dispensing Mode: Temporized");
+
+if(!RS232V("PS  0500"))
+ {   qDebug() << "Error in PS   command, pressure";
+    return false;
+}
+
+ui->dispenserPressureLabel->setText("Dispensing Pressure: 50");
+
+if(!RS232V("DS  T10000"))
+ {   qDebug() << "Error in DS   command, time";
+    return false;
+}
+ui->dispenserTimeLabel->setText("Dispensing time: 1");
+
+if(!RS232V("VS  0050"))
+ {   qDebug() << "Error in VS   command, vacuum";
+    return false;    
+}
+ui->dispenserVacuumLabel->setText("Dispensing Vacuum: 0.5");
+
+
+// Continuos Mode
+
+//if(!RS232V("MT  "))
+//    qDebug() << "Error in TT   command, Continuos mode"
+//    return false;
+//
+//if(!RS232V("PS  0500"))
+//    qDebug() << "Error in PS   command, pressure"
+//    return false;
+
+return true;
+}
+
+bool OWIS_controller::dispenser_mode()
+{
+
+if(!RS232V("TM--"))
+   { qDebug() << "Error in TT   command, temporized mode";
+    return false;
+}
+
+QByteArray currentMode;
+currentMode.append(ui->dispenserModeLabel->text());
+if (currentMode=="Dispensing Mode: Temporized")
+    ui->dispenserModeLabel->setText("Dispensing Mode: Continuous");
+else
+    ui->dispenserModeLabel->setText("Dispensing Mode: Temporized");
+return true;
+}
+
+bool OWIS_controller::dispenser_pressure()
+{
+QByteArray newPressure;
+newPressure.append(ui->dispenserPressure->text());
+newPressure.insert(0,QByteArray ("PS  "));
+
+if(!RS232V(newPressure))
+ {   qDebug() << "Error in PS   command, pressure";
+    return false;
+}
+    newPressure.remove(0,4);
+    newPressure.insert(3,".");
+    newPressure.insert(0,QByteArray ("Dispensing Pressure: "));
+ui->dispenserPressureLabel->setText(newPressure);
+return true;
+}
+
+bool OWIS_controller::dispenser_pressureUnits()
+{
+QByteArray newUnits;
+newUnits.append(ui->dispenserPressureUnits->text());
+newUnits.insert(0,QByteArray ("E6  "));
+
+if(!RS232V(newUnits))
+ {   qDebug() << "Error in E6   command, pressure units";
+    return false;
+}
+ui->dispenserPressureUnitsLabel->setText("Dispensing units: psi");
+newUnits.remove(0,4);
+
+        if (newUnits=="00"){ newUnits.clear(); newUnits.append("psi");}
+        if (newUnits=="01"){ newUnits.clear(); newUnits.append("bar");}
+        if (newUnits=="02"){ newUnits.clear(); newUnits.append("kpa");}
+
+
+newUnits.insert(0,QByteArray ("Dispensing Units: "));
+ui->dispenserPressureUnitsLabel->setText(newUnits);
+
+return true;
+}
+
+bool OWIS_controller::dispenser_time()
+{
+
+QByteArray newTime;
+newTime.append(ui->dispenserTime->text());
+newTime.insert(0,QByteArray ("DS  "));
+
+if(!RS232V(newTime))
+  {  qDebug() << "Error in DS   command, Time";
+    return false;
+}
+    newTime.remove(0,4);
+    newTime.insert(2,".");
+    newTime.insert(0,QByteArray ("Dispensing Time: "));
+ui->dispenserTimeLabel->setText(newTime);
+return true;
+
+}
+
+bool OWIS_controller::dispenser_vacuum()
+{
+QByteArray newVacuum;
+newVacuum.append(ui->dispenserVacuum->text());
+newVacuum.insert(0,QByteArray ("VS  "));
+
+if(!RS232V(newVacuum))
+ {   qDebug() << "Error in VS   command, Vacuum";
+    return false;
+}
+    newVacuum.remove(0,4);
+    newVacuum.insert(2,".");
+    newVacuum.insert(0,QByteArray ("Dispensing Vacuum: "));
+ui->dispenserVacuumLabel->setText(newVacuum);
+
+return true;
+}
+
+
+
+
+
+bool OWIS_controller::RS232V(QByteArray command)
+{
+
+//Initialization of serial port
+
+bool debug = false;
+
     QByteArray readData;
     QByteArray writeData;
     QSerialPort serialPort;
@@ -80,124 +224,462 @@ bool OWIS_controller::TalkSR232( const std::vector<std::string> &arguments){
             std::cout<<"Port opened successfully"<<std::endl;
     }
 
-    writeData = QByteArrayLiteral("\x05"); //sending enquiry command
-    long long int output = 0;
-    output = serialPort.write(writeData);
-    if (debug)
-        std::cout<<"Log >> bytes written   : "<<output<<" : operation : "<<writeData.toStdString()<<std::endl;
-    if(output == -1){
-        std::cout<<"Error write operation : "<<writeData.toStdString()
-                << " => " << serialPort.errorString().toStdString()<<std::endl;
-        return false;
-    }
 
-    readData.clear();
-    int control = 0;
-    while(serialPort.isOpen()){ // READING BYTES FROM SERIAL PORT
-        control += 1;
-        //https://stackoverflow.com/questions/42576537/qt-serial-port-reading
-        if(!serialPort.waitForReadyRead(100)) //block until new data arrives, dangerous, need a fix
-            std::cout << "Read error: " << serialPort.errorString().toStdString()<<std::endl;
-        else{
-            if (debug)
-                std::cout << "New data available: " << serialPort.bytesAvailable()<<std::endl;
-            readData = serialPort.readAll();
-            if (debug)
-                std::cout << readData.toStdString()<<std::endl;
-            break;
-        }
-        if (control > 10){
-            std::cout << "Time out read error"<<std::endl;
-            return false;
-        }
 
-    }// END READING BYTES FROM SERIAL PORT
 
-    if(readData.size() != 0){
+// building command line
+
+
+
+//command=ui->dispenserCommand->text().toLatin1();
+
+QByteArray full_order;
+full_order[0] = 2;
+//qDebug() << command;
+
+int size_command_line;
+size_command_line=command.size();
+QByteArray order;
+QByteArray cs_temp;
+QByteArray cs;
+order=int_tohexQByteArray_UltimusV(size_command_line);
+
+for(int i=0;i<command.size();i++)
+order.append(command[i]);
+
+int checksum = 0;
+for(int i=0;i<order.size();i++)// evauating checksum quantity
+checksum -= order[i];
+
+    cs_temp = int_tohexQByteArray_UltimusV(checksum & 0x000000ff);
+    cs.clear();
+    if(cs_temp.size() > 2){
         if (debug)
-            std::cout<<"Read operation ok : "<<readData.toStdString()<<std::endl;
-        if(readData.at(0) != 6){ //expecting acknowledge command (0x06)
-            std::cout<<"Wrong read : "<<readData.toStdString()<<std::endl;
-            return false;
-        }
-    }
-    ///////////////////////////////////////////////////////////////////////////////
-    // Composing message in an appropriate way for the Ultimis V (Sec1 of appB of manual)
-    int checksum = 0;
-    int N_bytes = 4*arguments.size();
-    writeData = QByteArrayLiteral("\x02"); //https://stackoverflow.com/questions/36327327/is-there-a-shorter-way-to-initialize-a-qbytearray
-    QByteArray temp_writeData = int_tohexQByteArray_UltimusV(N_bytes);
-
-    for(unsigned int i=0;i<arguments.size();i++)
-        temp_writeData.append(QByteArray(arguments[i].c_str()));
-
-    for(int i=0;i<temp_writeData.size();i++)// evauating checksum quantity
-        checksum -= temp_writeData[i];
-
-    writeData.append(temp_writeData);
-
-    //take tha least significant byte of checksum, i.e. checksum & 0x000000ff
-    temp_writeData.clear();
-    temp_writeData = int_tohexQByteArray_UltimusV(checksum & 0x000000ff);
-    QByteArray qb_checksum;
-    qb_checksum.clear();
-    if(temp_writeData.size() > 2){
+            qDebug() <<"here : "<<cs_temp.size()<<"  :  " << cs_temp ;
+        cs = cs_temp.remove(0,(cs_temp.size()-2));
         if (debug)
-            std::cout<<"here : "<<temp_writeData.size()<<"  :  "<<temp_writeData.toStdString();
-        qb_checksum = temp_writeData.remove(0,(temp_writeData.size()-2));
-        if (debug)
-            std::cout<<"CS  :  "<<qb_checksum.toStdString()<<std::endl;
+            qDebug() <<"CS  :  "<<cs ;
     } else {
-        qb_checksum = temp_writeData;
+        cs = cs_temp;
         if (debug)
-            std::cout<<"CS  :  "<<qb_checksum.toStdString()<<std::endl;
+            qDebug() <<"CS  :  "<<cs ;
     }
 
-    writeData.append(qb_checksum);
-    writeData.append(QByteArrayLiteral("\x03"));
-    writeData.append(QByteArrayLiteral("\x04"));
-    //// END OF COMMAND CONSTRUCTION
+ if(debug) qDebug() << order <<checksum << cs ;
 
-    output = serialPort.write(writeData);// SENDING MESSAGE TO ULTIMUS V
+full_order.append(order);
+full_order.append(cs);
+full_order.append(QByteArrayLiteral("\x03"));
+
+  writeData = QByteArrayLiteral("\x05"); //sending enquiry command
+   long long int output = 0;
+   output = serialPort.write(writeData);
+   if (debug)
+       qDebug() <<"Log >> bytes written   : " <<output<< " : operation : "<<writeData;
+   if(output == -1){
+       qDebug() <<"Error write operation : "<<writeData << " => " << serialPort.errorString();
+       return false;
+   }
+
+
+// sending ENQ
+
+QByteArray enq;
+enq[0]=0x05;
+
+ output = serialPort.write(enq);
     if (debug)
-        std::cout<<"Log >> bytes written   : "<<output<<" : "<<writeData.toStdString()<<std::endl;
+        qDebug() <<"Log >> bytes written   : " <<enq<< " : operation : "<<enq;
     if(output == -1){
-        std::cout<<"Error write operation : "<<writeData.toStdString()<<std::endl;
-        std::cout << "error: " << serialPort.errorString().toStdString()<<std::endl;
+        qDebug() <<"Error write operation : "<<enq << " => " << serialPort.errorString();
         return false;
     }
-    //////////// End sending UltimusV command
- sleep(200);
+
+// reading ACK
+
+int endRead=0;
+int control;
+  while(endRead==0)
+{
+   readData.clear();
+   control = 0;
+   while(serialPort.isOpen()){ // READING BYTES FROM SERIAL PORT
+       control += 1;
+       //https://stackoverflow.com/questions/42576537/qt-serial-port-reading
+       if(!serialPort.waitForReadyRead(100)) //block until new data arrives, dangerous, need a fix
+            qDebug() << "Read error: " << serialPort.errorString() ;
+       else{
+           if (debug)
+                qDebug() << "New data available: " << serialPort.bytesAvailable() ;
+           readData = serialPort.readAll();
+
+           if (debug)
+                qDebug() << readData;
+           break;
+       }
+       if (control > 10){
+            qDebug() << "Time out read error";
+           return false;
+       }
+}
+if (readData.endsWith("\x06"))
+        endRead=1;
+}
+
+// sending command
+
+
+    output = serialPort.write(full_order);
+    if (debug)
+        qDebug() <<"Log >> bytes written   : " <<output<< " : operation : "<<full_order;
+    if(output == -1){
+        qDebug() <<"Error write operation : "<<full_order << " => " << serialPort.errorString();
+        return false;
+    }
+
+
+
+// reading A0/A2
+
+QByteArray buffer;
+endRead=0;
+  while(endRead==0) {
 
     readData.clear();
     control = 0;
-    while(serialPort.isOpen()){ //dangerous, may freez the GUI
+    while(serialPort.isOpen()){ // READING BYTES FROM SERIAL PORT
         control += 1;
-        if(!serialPort.waitForReadyRead(100)) //block until new data arrives
-            std::cout << "error: " << serialPort.errorString().toStdString()<<std::endl;
+        //https://stackoverflow.com/questions/42576537/qt-serial-port-reading
+        if(!serialPort.waitForReadyRead(200)) //block until new data arrives, dangerous, need a fix
+             qDebug() << "Read error: " << serialPort.errorString() ;
         else{
             if (debug)
-                std::cout << "2 New data available: " << serialPort.bytesAvailable()<<std::endl;
-            readData.append(serialPort.readAll());
+                 qDebug() << "New data available: " << serialPort.bytesAvailable() ;
+            readData = serialPort.readAll();
+            buffer.append(readData);
+
             if (debug)
-                std::cout << readData.toStdString()<<std::endl;
-            if(readData.at(0) == 2 && readData.at(readData.size()-1) == 3) //expectin A0 command, may add controls on checksum in future
-                break;
+                 qDebug() << readData;
+            break;
         }
         if (control > 10){
-            std::cout << "Time out read error"<<std::endl;
+             qDebug() << "Time out read error";
             return false;
         }
+}
+ if (buffer.endsWith("\x03"))
+       endRead=1;
+}
+
+  QByteArray response;
+
+  response.append(buffer[4]);
+  response.append(buffer[5]);
+
+  if(debug) qDebug() <<" response :" << response;
+
+  if(response!="A0")
+   {   qDebug() << "Error in Ultimus comunication, A2 code";
+      return false;
+  }else
+  {//ui->dispenserResponse->setText("Success");
+
+  }
+
+
+
+// sending EOT
+
+QByteArray eot;
+eot[0]=0x04;
+
+ output = serialPort.write(eot);
+    if (debug)
+        qDebug() <<"Log >> bytes written   : " <<eot<< " : operation : "<<eot;
+    if(output == -1){
+        qDebug() <<"Error write operation : "<<eot << " => " << serialPort.errorString();
+        return false;
     }
-    //////////////////////////////////
-    serialPort.close(); //closing serial port comunication
-    return true;
+
+
+//closing port
+
+
+serialPort.close(); //closing serial port comunication
+std::cout<<"Port closed"<<std::endl;
+
+return true;
 }
 
 
-void OWIS_controller::dispense_order()
+QByteArray OWIS_controller::RS232V_fb(QByteArray command)
 
 {
+    //Initialization of serial port
+    QByteArray feedback;
+    feedback="Error";
+    bool debug = false;
+
+
+     QByteArray readData;
+     QByteArray writeData;
+     QSerialPort serialPort;
+     const QString serialPortName = "COM4"; //to modify according to the serial port used
+     serialPort.setPortName(serialPortName);
+     serialPort.setBaudRate(QSerialPort::Baud115200); // set BaudRate to 115200
+     serialPort.setParity(QSerialPort::NoParity); //set Parity Bit to None
+     serialPort.setStopBits(QSerialPort::OneStop); //set
+     serialPort.setDataBits(QSerialPort::Data8); //DataBits to 8
+     serialPort.setFlowControl(QSerialPort::NoFlowControl);
+     serialPort.close();
+     if (!serialPort.open(QIODevice::ReadWrite)) {
+         std::cout<<"FAIL!!!!!"<<std::endl;
+         qWarning("Failed to open port %s, error: %s",serialPortName.toLocal8Bit().constData(),serialPort.errorString().toLocal8Bit().constData());
+         return feedback;
+     }else {
+         if (debug)
+             std::cout<<"Port opened successfully"<<std::endl;
+}
+
+  // building command line
+
+
+
+  //command=ui->dispenserCommand->text().toLatin1();
+
+  QByteArray full_order;
+  full_order[0] = 2;
+  //qDebug() << command;
+
+  int size_command_line;
+  size_command_line=command.size();
+  QByteArray order;
+  QByteArray cs_temp;
+  QByteArray cs;
+  order=int_tohexQByteArray_UltimusV(size_command_line);
+
+  for(int i=0;i<command.size();i++)
+  order.append(command[i]);
+
+  int checksum = 0;
+  for(int i=0;i<order.size();i++)// evauating checksum quantity
+  checksum -= order[i];
+
+      cs_temp = int_tohexQByteArray_UltimusV(checksum & 0x000000ff);
+      cs.clear();
+      if(cs_temp.size() > 2){
+          if (debug)
+              qDebug() <<"here : "<<cs_temp.size()<<"  :  " << cs_temp ;
+          cs = cs_temp.remove(0,(cs_temp.size()-2));
+          if (debug)
+              qDebug() <<"CS  :  "<<cs ;
+      } else {
+          cs = cs_temp;
+          if (debug)
+              qDebug() <<"CS  :  "<<cs ;
+      }
+
+  if(debug) qDebug() << order <<checksum << cs ;
+
+  full_order.append(order);
+  full_order.append(cs);
+  full_order.append(QByteArrayLiteral("\x03"));
+
+    writeData = QByteArrayLiteral("\x05"); //sending enquiry command
+     long long int output = 0;
+     output = serialPort.write(writeData);
+     if (debug)
+         qDebug() <<"Log >> bytes written   : " <<output<< " : operation : "<<writeData;
+     if(output == -1){
+         qDebug() <<"Error write operation : "<<writeData << " => " << serialPort.errorString();
+         return feedback;
+     }
+
+// sending ENQ
+
+QByteArray enq;
+enq[0]=0x05;
+
+ output = serialPort.write(enq);
+    if (debug)
+        qDebug() <<"Log >> bytes written   : " <<enq<< " : operation : "<<enq;
+    if(output == -1){
+        qDebug() <<"Error write operation : "<<enq << " => " << serialPort.errorString();
+        return feedback;
+    }
+
+ // reading ACK
+int endRead=0;
+int control;
+  while(endRead==0)
+  {
+    readData.clear();
+    control = 0;
+    while(serialPort.isOpen()){ // READING BYTES FROM SERIAL PORT
+    control += 1;
+    //https://stackoverflow.com/questions/42576537/qt-serial-port-reading
+    if(!serialPort.waitForReadyRead(100)) //block until new data arrives, dangerous, need a fix
+         qDebug() << "Read error: " << serialPort.errorString() ;
+    else{
+        if (debug)
+             qDebug() << "New data available: " << serialPort.bytesAvailable() ;
+        readData = serialPort.readAll();
+
+        if (debug)
+             qDebug() << readData;
+        break;
+    }
+    if (control > 10){
+         qDebug() << "Time out read error";
+        return feedback;
+    }
+ }
+    if (readData.endsWith("\x06"))
+        endRead=1;
+  }
+
+//  serialPort.clear();
+
+
+    // sending command
+
+
+  output = serialPort.write(full_order);
+  if (debug)
+      qDebug() <<"Log >> bytes written   : " <<output<< " : operation : "<<full_order;
+  if(output == -1){
+      qDebug() <<"Error write operation : "<<full_order << " => " << serialPort.errorString();
+      return feedback;
+  }
+
+
+  // reading A0/A2
+
+QByteArray buffer;
+endRead=0;
+
+  while(endRead==0) {
+
+   readData.clear();
+   control = 0;
+   while(serialPort.isOpen()){ // READING BYTES FROM SERIAL PORT
+   control += 1;
+   //https://stackoverflow.com/questions/42576537/qt-serial-port-reading
+   if(!serialPort.waitForReadyRead(500)) //block until new data arrives, dangerous, need a fix
+        qDebug() << "Read error: " << serialPort.errorString() ;
+   else{
+       if (debug)
+            qDebug() << "New data available: " << serialPort.bytesAvailable() ;
+       readData = serialPort.readAll();
+buffer.append(readData);
+       if (debug)
+            qDebug() << readData << "buffer 1: " << buffer ;
+       break;
+   }
+   if (control > 10){
+        qDebug() << "Time out read error";
+       return feedback;
+   }
+   }
+   if (buffer.endsWith("\x03"))
+       endRead=1;
+  }
+
+  QByteArray response;
+
+  response.append(buffer[4]);
+  response.append(buffer[5]);
+
+  if(debug) qDebug() <<" response :" << response;
+
+  if(response!="A0")
+   {   qDebug() << "Error in Ultimus comunication, A2 code";
+      return feedback;
+  }
+
+//   sending ACK
+
+//   if (readData!="A0")
+//       return feedback;
+//   else {
+    QByteArray ack;
+    ack[0]=0x06;
+
+     output = serialPort.write(ack);
+        if (debug)
+            qDebug() <<"Log >> bytes written   : " <<ack<< " : operation : "<<ack;
+        if(output == -1){
+            qDebug() <<"Error write operation : "<<ack << " => " << serialPort.errorString();
+            return feedback;
+        }
+//   }
+   // reading feedback
+
+        buffer.clear();
+        endRead=0;
+      while(endRead==0) {
+
+
+        readData.clear();
+       control = 0;
+       while(serialPort.isOpen()){ // READING BYTES FROM SERIAL PORT
+       control += 1;
+       if(!serialPort.waitForReadyRead(500)) //block until new data arrives, dangerous, need a fix
+            qDebug() << "Read error: " << serialPort.errorString() ;
+       else{
+           if (debug)
+                qDebug() << "New data available: " << serialPort.bytesAvailable() ;
+           readData = serialPort.readAll();
+        buffer.append(readData);
+           if (debug)
+                qDebug() << readData << "buffer 2:" << buffer;
+           break;
+       }
+       if (control > 10){
+            qDebug() << "Time out read error";
+           return feedback;
+           }
+   }  
+       if (buffer.endsWith("\x03"))
+       endRead=1;
+}
+ // sending EOT
+
+ QByteArray eot;
+ eot[0]=0x04;
+
+  output = serialPort.write(eot);
+  if (debug)
+      qDebug() <<"Log >> bytes written   : " <<eot<< " : operation : "<<eot;
+  if(output == -1){
+      qDebug() <<"Error write operation : "<<eot << " => " << serialPort.errorString();
+      return feedback;
+        }
+
+  //closing port
+
+
+  serialPort.close(); //closing serial port comunication
+  if (debug) qDebug() <<"Port closed";
+
+feedback=buffer;
+int fbSize=feedback.length();
+feedback.remove(fbSize-3,3);
+feedback.remove(0,3);
+
+if(debug) qDebug() << feedback  << fbSize;
+
+//ui->dispenserResponse->setText(feedback);
+return feedback;
+
+
+}
+
+
+bool OWIS_controller::RS232V()
+
+{
+<<<<<<< HEAD
 std::vector<std::string> arguments;
 //char command[];
 //arguments=ui->dispenserCommand->text();
@@ -206,5 +688,34 @@ std::vector<std::string> arguments;
 arguments.push_back("DI ");
 TalkSR232(arguments);
 
+=======
+QByteArray command;
+command.append(ui->dispenserCommand->text());
+if(!RS232V(command))
+ {   qDebug() << "Error in sending command";
+    return false;
+ }
+ else
+ui->dispenserResponse->setText("Success");
+return true;
+>>>>>>> 8c5a970d6746fcf0249c399368b2f89f0ee40956
 }
 
+
+
+bool OWIS_controller::RS232V_fb()
+
+{
+QByteArray command;
+QByteArray response;
+command.append(ui->dispenserCommand->text());
+response.append(RS232V_fb(command));
+if(response=="error")
+ {   qDebug() << "Error in sending command";
+ui->dispenserResponse->setText("error");
+    return false;
+ }
+ else
+ui->dispenserResponse->setText(response);
+return true;
+}
