@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QTimer>
+#include <QElapsedTimer>
 
 //function to write in appropriate way exadecimal number to ultimusV
 QByteArray int_tohexQByteArray_UltimusV(int input){
@@ -718,20 +719,22 @@ bool OWIS_controller::dispenseCycle()
        { qDebug() << "Error in DI   command";
         return false;
     }
-
+return true;
 }
 
 
 bool OWIS_controller::patternLine()
 
 {
-    if(X_stage_on!=0 || Y_stage_on!=0)
+    if(X_stage_on==0 || Y_stage_on==0)
         return false;
-
+bool debug=false;
     double length=100;
     double vel;
     double time;
     double deltaY=10;
+    int move_state_X=1;
+    QElapsedTimer timer;
 
     vel = PS90_GetPosFEx(Index,Axisid_X);
     long error = PS90_GetReadError(1);
@@ -739,17 +742,25 @@ bool OWIS_controller::patternLine()
 
     error = PS90_MoveEx(Index,Axisid_X,-length,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
+    timer.start();
+    Sleep(500);
 
     if(!dispenseCycle())
     return false;
-    time=vel/length;
-    QTimer::singleShot(time*1000, this, SLOT(dispenseCycle()));
+    time=length/vel-0.2*(length/vel);
+    /*if (debug)*/ qDebug() << "velocidad" << vel << "tiempo" << time;
 
-    move_state_X = PS90_GetMoveState(Index,Axisid_X);
-    error = PS90_GetReadError(Index);
-    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
+while (timer.elapsed()<time*1000) {if (debug) qDebug() << "time elapsed:" << timer.elapsed(); }
+if(!dispenseCycle())
+    return false;
 
-    while(move_state_X!=0){}
+    while(move_state_X!=0){
+        move_state_X = PS90_GetMoveState(Index,Axisid_X);
+        error = PS90_GetReadError(Index);
+        if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
+//        if (debug) qDebug() << "estado de movimiento eje X" << move_state_X;
+    }
+
     error = PS90_MoveEx(Index,Axisid_X,length,1);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
     error = PS90_MoveEx(Index,Axisid_Y,deltaY,1);
