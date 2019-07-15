@@ -116,11 +116,12 @@ void OWIS_controller::on_InitPS90Button_clicked()
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetRefSwitch X Axis")); }
 
 
+
         double value = PS90_GetPositionEx(Index,Axisid_X);
         error = PS90_GetReadError(Index);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx X Axis")); }
         ui->lineEdit_axis_pos_X->setText(QString::number(value));
-        ui->labelVelocity_X->setText(QString::number(vel[0]));
+        ui->labelVelocity_X->setText(QString::number(pos_vel[0]));
     
 
 
@@ -219,7 +220,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error = PS90_GetReadError(Index);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Y Axis")); }
         ui->lineEdit_axis_pos_Y->setText(QString::number(value));
-        ui->labelVelocity_Y->setText(QString::number(vel[1]));
+        ui->labelVelocity_Y->setText(QString::number(pos_vel[1]));
 
     
 
@@ -320,7 +321,7 @@ void OWIS_controller::on_InitPS90Button_clicked()
         error = PS90_GetReadError(Index);
         if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPositionEx Z Axis")); }
         ui->lineEdit_axis_pos_Z->setText(QString::number(value));
-        ui->labelVelocity_Z->setText(QString::number(vel[2]));
+        ui->labelVelocity_Z->setText(QString::number(pos_vel[2]));
 
     
 
