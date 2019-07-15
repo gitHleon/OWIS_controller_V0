@@ -26,16 +26,7 @@ private slots:
 void J_axes_translator(int index, int button, double value);
 void enableRealJoyClicked(bool clicked);
 void runRealJoy();
-bool RS232V(QByteArray command);
-bool RS232V();
-QByteArray RS232V_fb(QByteArray command);
-bool RS232V_fb();
-bool dispenser_init();
-bool dispenser_mode();
-bool dispenser_pressure();
-bool dispenser_pressureUnits();
-bool dispenser_time();
-bool dispenser_vacuum();
+
 
 /// initialization.cpp ///
 
@@ -95,6 +86,23 @@ bool dispenser_vacuum();
     bool setVelocityUI_Y();
     bool setVelocity_Z(long value);
     bool setVelocityUI_Z();
+
+ /// Glue Dispenser ///
+
+    bool RS232V(QByteArray command);
+    bool RS232V();
+    QByteArray RS232V_fb(QByteArray command);
+    bool RS232V_fb();
+    bool dispenser_init();
+    bool dispenser_mode();
+    bool dispenser_pressure();
+    bool dispenser_pressureUnits();
+    bool dispenser_time();
+    bool dispenser_vacuum();
+    bool patternLine();
+    bool dispenseCycle();
+
+
 
 private:
 
