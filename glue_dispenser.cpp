@@ -22,6 +22,7 @@
 #include <QtDebug>
 #include <stdio.h>
 #include <stdlib.h>
+#include <QTimer>
 
 //function to write in appropriate way exadecimal number to ultimusV
 QByteArray int_tohexQByteArray_UltimusV(int input){
@@ -101,7 +102,7 @@ return true;
 bool OWIS_controller::dispenser_mode()
 {
 
-if(!RS232V("TM--"))
+if(!RS232V("TM  "))
    { qDebug() << "Error in TT   command, temporized mode";
     return false;
 }
@@ -709,3 +710,51 @@ ui->dispenserResponse->setText("error");
 ui->dispenserResponse->setText(response);
 return true;
 }
+
+bool OWIS_controller::dispenseCycle()
+
+{
+    if(!RS232V("DI  "))
+       { qDebug() << "Error in DI   command";
+        return false;
+    }
+
+}
+
+
+bool OWIS_controller::patternLine()
+
+{
+    if(X_stage_on!=0 || Y_stage_on!=0)
+        return false;
+
+    double length=100;
+    double vel;
+    double time;
+    double deltaY=10;
+
+    vel = PS90_GetPosFEx(Index,Axisid_X);
+    long error = PS90_GetReadError(1);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetPosFEx X Axis")); }
+
+    error = PS90_MoveEx(Index,Axisid_X,-length,1);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
+
+    if(!dispenseCycle())
+    return false;
+    time=vel/length;
+    QTimer::singleShot(time*1000, this, SLOT(dispenseCycle()));
+
+    move_state_X = PS90_GetMoveState(Index,Axisid_X);
+    error = PS90_GetReadError(Index);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_GetMoveState X Axis ")); }
+
+    while(move_state_X!=0){}
+    error = PS90_MoveEx(Index,Axisid_X,length,1);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
+    error = PS90_MoveEx(Index,Axisid_Y,deltaY,1);
+    if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_MoveEx X Axis- need to add specification!!")); }
+    return true;
+}
+
+
