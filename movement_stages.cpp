@@ -183,6 +183,7 @@ bool OWIS_controller::setVelocityUI_X()
 {
 double value=ui->doubleSpinBox_newVelocity_X->value();
 setVelocity_X(value);
+ui->labelVelocity_X->setText((QString::number(value)));
 return true;
 }
 
@@ -352,6 +353,7 @@ bool OWIS_controller::setVelocityUI_Y()
 {
 double value=ui->doubleSpinBox_newVelocity_Y->value();
 setVelocity_Y(value);
+ui->labelVelocity_Y->setText((QString::number(value)));
 return true;
 }
 ///////////////////// Z STAGE ///////////////////////////
@@ -516,6 +518,7 @@ bool OWIS_controller::setVelocityUI_Z()
 {
 double value=ui->doubleSpinBox_newVelocity_Z->value();
 setVelocity_Z(value);
+ui->labelVelocity_Z->setText((QString::number(value)));
 return true;
 }
 
