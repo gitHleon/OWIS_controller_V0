@@ -30,7 +30,7 @@ OWIS_controller::OWIS_controller(QWidget *parent) :
     timer->start(100);
     timerJoy->start(10);
 
-    connect(ui->SendCommandUltimusButton, SIGNAL(clicked()), this, SLOT(dispense_order()));
+    connect(ui->SendCommandUltimusButton, SIGNAL(clicked()), this, SLOT(RS232V()));
 
 ui->label_PS90_general_status->setText("PS90 Status: Disconnected");
 
@@ -62,6 +62,7 @@ connect(ui->changePressureButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_pre
 connect(ui->changeUnitsButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_pressureUnits()));
 connect(ui->changeTimeButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_time()));
 connect(ui->changeVacuumButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_vacuum()));
+connect(ui->dispenseCycleButton, SIGNAL(clicked(bool)), this,SLOT(dispenseCycle()));
 
 
 
