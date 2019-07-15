@@ -54,6 +54,11 @@ ui->label_stage_state_Z->setText("Z Stage: Off");
 
  connect(ui->enableRealJoy, SIGNAL(toggled(bool)), this, SLOT(enableRealJoyClicked(bool)));
 
+ connect(ui->changeVel_X, SIGNAL(clicked(bool)), this,SLOT(setVelocityUI_X()));
+ connect(ui->changeVel_Y, SIGNAL(clicked(bool)), this,SLOT(setVelocityUI_Y()));
+ connect(ui->changeVel_Z, SIGNAL(clicked(bool)), this,SLOT(setVelocityUI_Z()));
+
+
 
 connect(ui->SendCommandUltimusButton, SIGNAL(clicked(bool)), this,SLOT(RS232V()));
 connect(ui->InitGlueDispenserButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_init()));
@@ -63,6 +68,7 @@ connect(ui->changeUnitsButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_pressu
 connect(ui->changeTimeButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_time()));
 connect(ui->changeVacuumButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_vacuum()));
 connect(ui->dispenseCycleButton, SIGNAL(clicked(bool)), this,SLOT(dispenseCycle()));
+connect(ui->linePatternButton, SIGNAL(clicked(bool)), this,SLOT(patternLine()));
 
 
 
