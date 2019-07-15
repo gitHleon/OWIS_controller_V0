@@ -172,7 +172,7 @@ bool OWIS_controller::setVelocity_X(long value)
     {    qDebug() << "Motor X is OFF";
         return false;}
 
-    long error =   PS90_SetVel(Index,Axisid_X,value);
+    long error =    PS90_SetPosFEx(Index,Axisid_X,value);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel X Axis")); }
     ui->labelVelocity_X->setText(QString::number(value));
     return true;
@@ -341,7 +341,7 @@ bool OWIS_controller::setVelocity_Y(long value)
     {    qDebug() << "Motor Y is OFF";
         return false;}
 
-    long error =   PS90_SetVel(Index,Axisid_Y,value);
+    long error =    PS90_SetPosFEx(Index,Axisid_Y,value);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel Y Axis")); }
     ui->labelVelocity_Y->setText(QString::number(value));
 return true;
@@ -505,7 +505,7 @@ bool OWIS_controller::setVelocity_Z(long value)
    {     qDebug() << "Motor Z is OFF";
         return false;}
 
-    long error =   PS90_SetVel(Index,Axisid_Z,value);
+    long error =    PS90_SetPosFEx(Index,Axisid_Z,value);
     if (error != 0 ){ QMessageBox::critical(this, tr("Error"), tr("Error in PS90_SetVel Z Axis")); }
     ui->labelVelocity_Z->setText(QString::number(value));
 return true;
