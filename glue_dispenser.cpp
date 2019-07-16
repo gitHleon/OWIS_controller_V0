@@ -732,7 +732,7 @@ bool debug=false;
     double length=100;
     double vel;
     double time;
-    double deltaY=10;
+    double deltaY=20;
     int move_state_X=1;
     QElapsedTimer timer;
 
@@ -747,7 +747,7 @@ bool debug=false;
 
     if(!dispenseCycle())
     return false;
-    time=length/vel-0.2*(length/vel);
+    time=length/vel-0.1*(length/vel);
     /*if (debug)*/ qDebug() << "velocidad" << vel << "tiempo" << time;
 
 while (timer.elapsed()<time*1000) {if (debug) qDebug() << "time elapsed:" << timer.elapsed(); }
