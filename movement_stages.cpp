@@ -469,10 +469,10 @@ if(!Z_stage_on)
         return;
     
 if (sender() == ui->joyNegButton_Z)
-runZ(-1);
+runZ(1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
  else if (sender() == ui->joyPosButton_Z)
-runZ(1);
+runZ(-1);
 //if (error !=0) {QMessageBox::critical(this, tr("Error"), tr("Error in RunZ Axis")); }}
 }
 
