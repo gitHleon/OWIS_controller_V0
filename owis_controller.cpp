@@ -58,6 +58,12 @@ ui->label_stage_state_Z->setText("Z Stage: Off");
  connect(ui->changeVel_Y, SIGNAL(clicked(bool)), this,SLOT(setVelocityUI_Y()));
  connect(ui->changeVel_Z, SIGNAL(clicked(bool)), this,SLOT(setVelocityUI_Z()));
 
+connect(ui->moveAxisButton_X, SIGNAL(clicked(bool)), this,SLOT(moveUI_X()));
+connect(ui->moveAxisButton_Y, SIGNAL(clicked(bool)), this,SLOT(moveUI_Y()));
+connect(ui->moveAxisButton_Z, SIGNAL(clicked(bool)), this,SLOT(moveUI_Z()));
+connect(ui->homeButton_X, SIGNAL(clicked(bool)), this,SLOT(home_X()));
+connect(ui->homeButton_Y, SIGNAL(clicked(bool)), this,SLOT(home_Y()));
+connect(ui->homeButton_Z, SIGNAL(clicked(bool)), this,SLOT(home_Z()));
 
 
 connect(ui->SendCommandUltimusButton, SIGNAL(clicked(bool)), this,SLOT(RS232V()));
@@ -69,8 +75,6 @@ connect(ui->changeTimeButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_time())
 connect(ui->changeVacuumButton, SIGNAL(clicked(bool)), this,SLOT(dispenser_vacuum()));
 connect(ui->dispenseCycleButton, SIGNAL(clicked(bool)), this,SLOT(dispenseCycle()));
 connect(ui->linePatternButton, SIGNAL(clicked(bool)), this,SLOT(patternLine()));
-
-
 
 
 // conexión con el Joystick //
